@@ -15,10 +15,10 @@ class LevelLoader {
 
       for ( int j = 0; j < board._cells[i].length; j++) {
 
-        final boolean is_empty = lines[i][j] == "v" || lines[i][j] == "B" || lines[i][j] == "M";
-        final boolean is_wall = lines[i][j] == "x";
-        final boolean is_destructible = lines[i][j] == "o";
-        final boolean is_exit = lines[i][j] == "S";
+        final boolean is_empty = lines[i].charAt(j) == 'v' || lines[i].charAt(j) == 'B' || lines[i].charAt(j) == 'M';
+        final boolean is_wall = lines[i].charAt(j) == 'x';
+        final boolean is_destructible = lines[i].charAt(j) == 'o';
+        final boolean is_exit = lines[i].charAt(j) == 'S';
 
         TypeCell current_cell = board._cells[i][j];
         if (is_empty) {
