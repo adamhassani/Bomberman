@@ -20,18 +20,18 @@ class LevelLoader {
         final boolean is_destructible = lines[i].charAt(j) == 'o';
         final boolean is_exit = lines[i].charAt(j) == 'S';
 
-        TypeCell current_cell = board._cells[i][j];
+        //TypeCell current_cell = board._cells[i][j];
         if (is_empty) {
-          current_cell = TypeCell.EMPTY;
+          board._cells[i][j] = TypeCell.EMPTY;
         }
         if (is_wall) {
-          current_cell = TypeCell.WALL;
+          board._cells[i][j] = TypeCell.WALL;
         }
         if (is_destructible) {
-          current_cell = TypeCell.DESTRUCTIBLE_WALL;
+          board._cells[i][j] = TypeCell.DESTRUCTIBLE_WALL;
         }
         if (is_exit) {
-          current_cell = TypeCell.EXIT_DOOR;
+          board._cells[i][j] = TypeCell.EXIT_DOOR;
         }
       }
     }

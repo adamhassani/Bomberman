@@ -26,10 +26,6 @@ class Board
   }
 
   void drawIt() {
-    for ( int i = 0; i < _cells.length; i++) {
-     for ( int j = 0; j < _cells[i].length; j++) {
-     square(_drawPosition.x, _drawPosition.y, _cellSize);
-     }
-     }
+    
   }
 }
