@@ -1,9 +1,9 @@
 class LevelLoader {
 
-  String[] lines;
+  String[] _lines;
 
   LevelLoader(String filePath) {
-    lines = loadStrings(filePath);
+    _lines = loadStrings(filePath);
   }
 
   void loadLevel(Board board) {
@@ -15,12 +15,13 @@ class LevelLoader {
 
       for ( int j = 0; j < board._cells[i].length; j++) {
 
-        final boolean is_empty = lines[i].charAt(j) == 'v' || lines[i].charAt(j) == 'B' || lines[i].charAt(j) == 'M';
-        final boolean is_wall = lines[i].charAt(j) == 'x';
-        final boolean is_destructible = lines[i].charAt(j) == 'o';
-        final boolean is_exit = lines[i].charAt(j) == 'S';
+        final boolean is_empty = _lines[i].charAt(j) == 'v' || _lines[i].charAt(j) == 'B' || _lines[i].charAt(j) == 'M';
+        final boolean is_wall = _lines[i].charAt(j) == 'x';
+        final boolean is_destructible = _lines[i].charAt(j) == 'o';
+        final boolean is_exit = _lines[i].charAt(j) == 'S';
 
         //TypeCell current_cell = board._cells[i][j];
+        //Determine l'etat de la cellule actuelle.
         if (is_empty) {
           board._cells[i][j] = TypeCell.EMPTY;
         }

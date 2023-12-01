@@ -6,7 +6,7 @@ class Game
   String _levelName;
 
   Game() {
-    _board = new Board();
+    _board = new Board(new PVector(0,0),new PVector(width,height),16,14);
     _hero = new Hero();
   }
 
@@ -14,6 +14,7 @@ class Game
   }
 
   void drawIt() {
+    _board.drawIt();
   }
 
   void handleKey(int k) {
