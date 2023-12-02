@@ -28,19 +28,17 @@ class Board
   }
 
   void drawIt() {
-    background(247,134,0);
+    background(orange);
+    LevelLoader level = new LevelLoader("levels/level1.txt");
+    level.loadLevel(game._board);
     
-    for (int y = 4 * 16; y <= 6 * 16 ; y += 16){
+    /*for (int y = 4 * 16; y <= 6 * 16 ; y += 16){
       for (int x = 0; x < 8 * 16; x += 16){
-        
-        
         PImage temp = _cellImage.get(x,y,16,16);
         image(temp,x,y);
       }
-    }
-
-    LevelLoader level = new LevelLoader("levels/level1.txt");
-    level.loadLevel(this);
+    }*/
+    
 
 
     

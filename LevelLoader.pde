@@ -7,15 +7,10 @@ class LevelLoader {
   }
 
   void loadLevel(Board board) {
-
-
-
+    int Pixels = 16;
     for ( int i = 0; i < board._cells.length; i++) {
-
-
       for ( int j = 0; j < board._cells[i].length; j++) {
-
-        final boolean is_empty = _lines[i].charAt(j) == 'v' || _lines[i].charAt(j) == 'B' || _lines[i].charAt(j) == 'M';
+        final boolean is_empty = _lines[i].charAt(j) == 'v' || _lines[i].charAt(j) == 'B' || _lines[i].charAt(j) == 'M' || _lines[i].charAt(j) == 'o';
         final boolean is_wall = _lines[i].charAt(j) == 'x';
         final boolean is_destructible = _lines[i].charAt(j) == 'o';
         final boolean is_exit = _lines[i].charAt(j) == 'S';
@@ -24,15 +19,23 @@ class LevelLoader {
         //Determine l'etat de la cellule actuelle.
         if (is_empty) {
           board._cells[i][j] = TypeCell.EMPTY;
+          PImage temp = board._cellImage.get(3 * Pixels,6 * Pixels, 16, 16);
+          image(temp,i * Pixels, j * Pixels);
         }
         if (is_wall) {
           board._cells[i][j] = TypeCell.WALL;
+          PImage temp = board._cellImage.get(5 * Pixels,6 * Pixels, 16, 16);
+          image(temp,i * Pixels, j * Pixels);
         }
         if (is_destructible) {
           board._cells[i][j] = TypeCell.DESTRUCTIBLE_WALL;
+          PImage temp = board._cellImage.get(4 * Pixels,4 * Pixels, 16, 16);
+          image(temp,i * Pixels, j * Pixels);
         }
         if (is_exit) {
           board._cells[i][j] = TypeCell.EXIT_DOOR;
+          PImage temp = board._cellImage.get(8 * Pixels,3 * Pixels, 16, 16);
+          image(temp,i * Pixels, j * Pixels);
         }
       }
     }
