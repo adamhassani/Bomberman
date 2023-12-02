@@ -17,25 +17,30 @@ class LevelLoader {
 
         //TypeCell current_cell = board._cells[i][j];
         //Determine l'etat de la cellule actuelle.
+        int size = board._cellSize;
         if (is_empty) {
           board._cells[i][j] = TypeCell.EMPTY;
-          PImage temp = board._cellImage.get(3 * Pixels,6 * Pixels, 16, 16);
-          image(temp,i * Pixels, j * Pixels);
+          PImage temp = board._cellImage.get(3 * Pixels,6 * Pixels, Pixels, Pixels);
+          temp.resize(width / board._nbCellsX, 0);
+          image(temp,i * size, j * size);
         }
         if (is_wall) {
           board._cells[i][j] = TypeCell.WALL;
-          PImage temp = board._cellImage.get(5 * Pixels,6 * Pixels, 16, 16);
-          image(temp,i * Pixels, j * Pixels);
+          PImage temp = board._cellImage.get(5 * Pixels,6 * Pixels, Pixels, Pixels);
+          temp.resize(width / board._nbCellsX,0);
+          image(temp,i * size, j * size);
         }
         if (is_destructible) {
           board._cells[i][j] = TypeCell.DESTRUCTIBLE_WALL;
-          PImage temp = board._cellImage.get(4 * Pixels,4 * Pixels, 16, 16);
-          image(temp,i * Pixels, j * Pixels);
+          PImage temp = board._cellImage.get(4 * Pixels,4 * Pixels, Pixels, Pixels);
+          temp.resize(width / board._nbCellsX, 0);
+          image(temp,i * size, j * size);
         }
         if (is_exit) {
           board._cells[i][j] = TypeCell.EXIT_DOOR;
-          PImage temp = board._cellImage.get(8 * Pixels,3 * Pixels, 16, 16);
-          image(temp,i * Pixels, j * Pixels);
+          PImage temp = board._cellImage.get(8 * Pixels,3 * Pixels, Pixels, Pixels);
+          temp.resize(width / board._nbCellsX, 0);
+          image(temp,i * size, j * size);
         }
       }
     }
