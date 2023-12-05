@@ -18,8 +18,8 @@ class Board
     _drawSize = drawSize;
     _nbCellsX = nbCellsX;
     _nbCellsY = nbCellsY;
-    _cellSize = width / nbCellsX;
-    _cells = new TypeCell[nbCellsX][nbCellsY];
+    _cellSize = width / nbCellsY; // __ J'ai modifie X par Y
+    _cells = new TypeCell[nbCellsY][nbCellsX];
     _cellImage = loadImage("data/img/tiles.png");
   }
   
