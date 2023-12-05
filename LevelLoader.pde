@@ -41,7 +41,7 @@ class LevelLoader {
         //Determine l'etat de la cellule actuelle.
         int size = board._cellSize;
         int posX = column * size;
-        int posY = (2 * line) * size;
+        int posY = (2 + line) * size;
 
         if (is_empty) {
           board._cells[column][line] = TypeCell.EMPTY;
