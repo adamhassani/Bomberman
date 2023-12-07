@@ -8,8 +8,8 @@ class Game
   String _levelName;
 
   Game() {
-    _origin = new PVector(0,2*(width / 13));
-    _drawSize = new PVector(width,height*14/16);
+    _origin = new PVector(0,0);
+    _drawSize = new PVector(width,height);
     _board = new Board(_origin,_drawSize,13,15);
     _hero = new Hero();
   }
@@ -19,6 +19,7 @@ class Game
 
   void drawIt() {
     _board.drawIt();
+    _hero.drawIt();
   }
 
   void handleKey(int k) {

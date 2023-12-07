@@ -9,6 +9,10 @@ class Hero {
   boolean _wasHit;
 
   Hero() {
+    _cellX = 1;
+    _cellY = 1;
+    _size = 24;
+    _position = new PVector(_cellX,_cellY);
     _wasHit = false;
   }
 
@@ -19,5 +23,7 @@ class Hero {
   }
 
   void drawIt() {
+    Sprites sprites = new Sprites("data/img/characters.png");
+    sprites.defBomberman();
   }
 }
