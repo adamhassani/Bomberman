@@ -10,7 +10,7 @@ class Board
   PVector _drawSize; //proportion fenêtre plateau
   int _nbCellsX;
   int _nbCellsY;
-  int _cellSize; // cells should be square
+  float _cellSize; // cells should be square
   PImage _cellImage; // Image de chaque cell.
 
   Board(PVector drawPosition, PVector drawSize, int nbCellsX, int nbCellsY) {
@@ -18,7 +18,7 @@ class Board
     _drawSize = drawSize;
     _nbCellsX = nbCellsX;
     _nbCellsY = nbCellsY;
-    _cellSize = width / nbCellsY; // __ J'ai modifie X par Y
+    _cellSize = _drawSize.x / nbCellsY; // __ J'ai modifie X par Y
     _cells = new TypeCell[nbCellsY][nbCellsX];
     _cellImage = loadImage("data/img/tiles.png");
   }
