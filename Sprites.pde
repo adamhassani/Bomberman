@@ -71,7 +71,7 @@ class Sprites {
     sprites.put(TypeSpriteLevel.LEFT_EDGE, allSprites.get(1 * boardSpriteSize, 5 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
     sprites.put(TypeSpriteLevel.RIGHT_EDGE, invertSprite(sprites.get(TypeSpriteLevel.LEFT_EDGE)));
     sprites.put(TypeSpriteLevel.BOTTOM_LEFT, allSprites.get(1 * boardSpriteSize, 6 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
-    sprites.put(TypeSpriteLevel.BOTTOM_RIGHT, allSprites.get(1 * boardSpriteSize, 6 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteLevel.BOTTOM_RIGHT, invertSprite(sprites.get(TypeSpriteLevel.BOTTOM_LEFT)));
     sprites.put(TypeSpriteLevel.TOP_LEFT, allSprites.get(1 * boardSpriteSize, 4 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
     sprites.put(TypeSpriteLevel.TOP_RIGHT, invertSprite(sprites.get(TypeSpriteLevel.TOP_LEFT)));
 
