@@ -5,6 +5,12 @@ enum TypeSpriteHero
     SEMI_MOVE_LEFT, SEMI_MOVE_RIGHT
 }
 
+enum TypeSpriteLevel
+{
+  EMPTY, EMPTY_UNDER_DESTRUCTIBLE_WALL, EMPTY_UNDER_BUILD, WALL, BOTTOM_EDGE, TOP_EDGE, LEFT_EDGE, 
+  RIGHT_EDGE, BOTTOM_LEFT, BOTTOM_RIGHT, TOP_LEFT, TOP_RIGHT, DESTRUCTIBLE_WALL, DESTRUCTIBLE_WALL_UNDER_BUILD, EXIT_DOOR
+}
+
 class Sprites {
   PImage allSprites;
   int boardSpriteSize;
@@ -18,7 +24,7 @@ class Sprites {
     bombermanSpriteHeight = 24;
   }
 
-  HashMap<TypeSpriteHero, PImage> defBomberman() {
+  HashMap<TypeSpriteHero, PImage> defSpritesBomberman() {
     HashMap<TypeSpriteHero, PImage> sprites = new HashMap<>();
 
     //STATIC
@@ -49,4 +55,48 @@ class Sprites {
     return sprites;
   }
   
-}
+  HashMap<TypeSpriteLevel, PImage> defSpritesLevel() {
+
+    HashMap<TypeSpriteLevel, PImage> sprites = new HashMap<>();
+
+    //EMPTY
+    sprites.put(TypeSpriteLevel.EMPTY, allSprites.get(3 * boardSpriteSize, 6 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteLevel.EMPTY_UNDER_DESTRUCTIBLE_WALL, allSprites.get(4 * boardSpriteSize, 6 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteLevel.EMPTY_UNDER_BUILD, allSprites.get(3 * boardSpriteSize, 5 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+
+    //WALL
+    sprites.put(TypeSpriteLevel.WALL, allSprites.get(5 * boardSpriteSize, 6 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteLevel.BOTTOM_EDGE, allSprites.get(2 * boardSpriteSize, 6 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteLevel.TOP_EDGE, allSprites.get(3 * boardSpriteSize, 4 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteLevel.LEFT_EDGE, allSprites.get(1 * boardSpriteSize, 5 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteLevel.RIGHT_EDGE, invertSprite(sprites.get(TypeSpriteLevel.LEFT_EDGE)));
+    sprites.put(TypeSpriteLevel.BOTTOM_LEFT, allSprites.get(1 * boardSpriteSize, 6 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteLevel.BOTTOM_RIGHT, allSprites.get(1 * boardSpriteSize, 6 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteLevel.TOP_LEFT, allSprites.get(1 * boardSpriteSize, 4 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteLevel.TOP_RIGHT, invertSprite(sprites.get(TypeSpriteLevel.TOP_LEFT)));
+
+
+    //DESTRUCTIBLE_WALL
+    sprites.put(TypeSpriteLevel.DESTRUCTIBLE_WALL, allSprites.get(4 * boardSpriteSize, 4 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteLevel.DESTRUCTIBLE_WALL_UNDER_BUILD, allSprites.get(4 * boardSpriteSize, 5 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+
+    //EXIT_DOOR
+    sprites.put(TypeSpriteLevel.EXIT_DOOR, allSprites.get(8 * boardSpriteSize, 3 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+
+    return sprites;
+  }
+  
+  PImage invertSprite(PImage sprite) {
+
+    PImage invertedSprite = createImage(sprite.width, sprite.height, ARGB);
+
+    for (int x = 0; x < sprite.width; x++) {
+      for (int y = 0; y < sprite.width; y++) {
+        int currentColor = sprite.get(x, y);
+        invertedSprite.set(sprite.width - x - 1, y, currentColor);
+      }
+    }
+    return invertedSprite;
+  }
+  
+  }
