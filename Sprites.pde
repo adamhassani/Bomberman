@@ -18,7 +18,7 @@ class Sprites {
     bombermanSpriteHeight = 24;
   }
 
-  HashMap<TypeSpriteHero, PImage> defBomberman() {
+  HashMap<TypeSpriteHero, PImage> defSpriteBomberman() {
     HashMap<TypeSpriteHero, PImage> sprites = new HashMap<>();
 
     //STATIC

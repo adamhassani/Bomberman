@@ -24,6 +24,7 @@ class Board
   }
   
   PVector getCellCenter(int i, int j) {
+    
     return null;
   }
 
