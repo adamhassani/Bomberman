@@ -32,6 +32,8 @@ class Board
 
   void drawIt() {
     background(orange);
+    
+    // Dessin du board en utilisant le tableau de retourne par le levelloader
     for ( int column = 0; column < _cellImage.length; column++) {
       for ( int line = 0; line < _cellImage[column].length; line++) {
         float posX = column * _cellSize;
