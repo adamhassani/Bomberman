@@ -5,6 +5,7 @@ class Bomb {
 
 
   Bomb() {
+    _timeToExplode = 500;
   }
 
   void update(Board board, Hero hero) {

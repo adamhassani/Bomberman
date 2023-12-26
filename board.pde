@@ -25,9 +25,9 @@ class Board
     _cellImage = level.loadLevel(this);
   }
 
-  PVector getCellCenter(int i, int j) {
-
-    return null;
+  PVector getCellCenter(float i, float j) {
+    PVector center = new PVector(i + _cellSize / 2, j + _cellSize / 2);
+      return center;
   }
 
   void drawIt() {
