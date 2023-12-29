@@ -7,8 +7,8 @@ enum TypeSpriteHero
 
 enum TypeSpriteLevel
 {
-  EMPTY, EMPTY_UNDER_DESTRUCTIBLE_WALL, EMPTY_UNDER_BUILD, WALL, BOTTOM_EDGE, TOP_EDGE, LEFT_EDGE, 
-  RIGHT_EDGE, BOTTOM_LEFT, BOTTOM_RIGHT, TOP_LEFT, TOP_RIGHT, DESTRUCTIBLE_WALL, DESTRUCTIBLE_WALL_UNDER_BUILD, EXIT_DOOR
+  EMPTY, EMPTY_UNDER_DESTRUCTIBLE_WALL, EMPTY_UNDER_BUILD, WALL, BOTTOM_EDGE, TOP_EDGE, LEFT_EDGE,
+    RIGHT_EDGE, BOTTOM_LEFT, BOTTOM_RIGHT, TOP_LEFT, TOP_RIGHT, DESTRUCTIBLE_WALL, DESTRUCTIBLE_WALL_UNDER_BUILD, EXIT_DOOR
 }
 
 class Sprites {
@@ -54,7 +54,7 @@ class Sprites {
 
     return sprites;
   }
-  
+
   HashMap<TypeSpriteLevel, PImage> defSpritesLevel() {
 
     HashMap<TypeSpriteLevel, PImage> sprites = new HashMap<>();
@@ -85,7 +85,7 @@ class Sprites {
 
     return sprites;
   }
-  
+
   PImage invertSprite(PImage sprite) {
 
     PImage invertedSprite = createImage(sprite.width, sprite.height, ARGB);
@@ -98,5 +98,4 @@ class Sprites {
     }
     return invertedSprite;
   }
-  
-  }
+}

@@ -12,6 +12,7 @@ class Board
   int _nbCellsY;
   float _cellSize; // cells should be square
   PImage[][] _cellImage; // Tableau de toutes les cells du board
+  LevelLoader level;
 
   Board(PVector drawPosition, PVector drawSize, int nbCellsX, int nbCellsY) {
     _drawPosition = drawPosition;
@@ -21,7 +22,7 @@ class Board
     _cellSize = _drawSize.x / nbCellsY; // __ J'ai modifie X par Y
     _cells = new TypeCell[nbCellsY][nbCellsX];
 
-    LevelLoader level = new LevelLoader("levels/level1.txt");
+    level = new LevelLoader("levels/level1.txt");
     _cellImage = level.loadLevel(this);
   }
 

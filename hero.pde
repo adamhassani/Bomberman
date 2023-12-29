@@ -7,7 +7,7 @@ class Hero {
   float _size;
   // if hero was hit by a bomb
   boolean _wasHit;
-  
+
   Sprites _heroSprite;
 
   Hero() {
@@ -16,10 +16,10 @@ class Hero {
     _size = 75;
     _position = new PVector(_cellX, _cellY);
     _wasHit = false;
-    _heroSprite = new Sprites("data/img/characters.png"); 
+    _heroSprite = new Sprites("data/img/characters.png");
   }
 
-  void move(Board board, PVector direction) {
+  void move(PVector direction) {
     _position.x += direction.x;
     _position.y += direction.y;
   }
@@ -29,7 +29,7 @@ class Hero {
 
   void drawIt() {
     PVector center = game._board.getCellCenter(_position.x, _position.y);
-    image(_heroSprite.defSpriteBomberman().get(TypeSpriteHero.FRONT), center.x, center.y, 2 * _size / 3, _size);
-    
+    PImage currentSprite = _heroSprite.defSpriteBomberman().get(TypeSpriteHero.FRONT);
+    image(currentSprite, center.x, center.y, 2 * _size / 3, _size);
   }
 }

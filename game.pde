@@ -21,21 +21,30 @@ class Game
   }
 
   void handleKey(int k) {
-      if ( k == 'd' || keyCode == RIGHT ) {
+    int column = 1;
+    int line = 1;
+    if (column < 11 && line < 14 ) {
+      if ( k == 'd' || k == 'D' || keyCode == RIGHT ) {
         PVector direction = new PVector(_board._cellSize, 0);
-        _hero.move(_board, direction);
-    }
-    if ( k == 's' || keyCode == DOWN ) {
+        if (_board._cells[column][line+1] == TypeCell.WALL) {
+          _hero.move(direction);
+          column += 1;
+        }
+      }
+      if ( k == 's' || k == 'S' || keyCode == DOWN ) {
         PVector direction = new PVector(0, _board._cellSize);
-        _hero.move(_board, direction);
-    }
-    if ( k == 'q' || keyCode == LEFT ) {
+        _hero.move(direction);
+      }
+      if ( k == 'q' || k == 'Q' || keyCode == LEFT ) {
         PVector direction = new PVector(-_board._cellSize, 0 );
-        _hero.move(_board, direction);
-    }
-    if ( k == 'z' || keyCode == UP ) {
+        _hero.move(direction);
+        line -= 1;
+      }
+      if ( k == 'z' || k == 'Z' || keyCode == UP ) {
         PVector direction = new PVector(0, -_board._cellSize);
-        _hero.move(_board, direction);
+        _hero.move(direction);
+        column -= 1;
+      }
     }
   }
 }
