@@ -7,8 +7,9 @@ enum TypeSpriteHero
 
 enum TypeSpriteLevel
 {
-  EMPTY, EMPTY_UNDER_DESTRUCTIBLE_WALL, EMPTY_UNDER_BUILD, WALL, BOTTOM_EDGE, TOP_EDGE, LEFT_EDGE, 
-  RIGHT_EDGE, BOTTOM_LEFT, BOTTOM_RIGHT, TOP_LEFT, TOP_RIGHT, DESTRUCTIBLE_WALL, DESTRUCTIBLE_WALL_UNDER_BUILD, EXIT_DOOR
+  EMPTY, EMPTY_UNDER_DESTRUCTIBLE_WALL, EMPTY_UNDER_BUILD, WALL, BOTTOM_EDGE, TOP_EDGE, LEFT_EDGE,
+    RIGHT_EDGE, BOTTOM_LEFT, BOTTOM_RIGHT, TOP_LEFT, TOP_RIGHT, DESTRUCTIBLE_WALL1, DESTRUCTIBLE_WALL2, DESTRUCTIBLE_WALL3, DESTRUCTIBLE_WALL4,
+    DESTRUCTIBLE_WALL_UNDER_BUILD1, DESTRUCTIBLE_WALL_UNDER_BUILD2, DESTRUCTIBLE_WALL_UNDER_BUILD3, DESTRUCTIBLE_WALL_UNDER_BUILD4, EXIT_DOOR1, EXIT_DOOR2
 }
 
 class Sprites {
@@ -16,6 +17,15 @@ class Sprites {
   int boardSpriteSize;
   int bombermanSpriteWidth;
   int bombermanSpriteHeight;
+  
+  //parametres pour l'animation du mur destructible
+  int currentImageIndex = 0;
+  int interval = 250; // interval en millisecondes
+  int lastImageSwitchTime = 0;
+  
+  //Parametres pour l'animation de la porte de sortie
+  int currentDoorIndex = 0;
+  int lastDoorSwitchTime = 0;
 
   Sprites(String filepath) {
     allSprites = loadImage(filepath);
@@ -54,7 +64,7 @@ class Sprites {
 
     return sprites;
   }
-  
+
   HashMap<TypeSpriteLevel, PImage> defSpritesLevel() {
 
     HashMap<TypeSpriteLevel, PImage> sprites = new HashMap<>();
@@ -77,15 +87,24 @@ class Sprites {
 
 
     //DESTRUCTIBLE_WALL
-    sprites.put(TypeSpriteLevel.DESTRUCTIBLE_WALL, allSprites.get(4 * boardSpriteSize, 4 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
-    sprites.put(TypeSpriteLevel.DESTRUCTIBLE_WALL_UNDER_BUILD, allSprites.get(4 * boardSpriteSize, 5 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteLevel.DESTRUCTIBLE_WALL1, allSprites.get(4 * boardSpriteSize, 4 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteLevel.DESTRUCTIBLE_WALL2, allSprites.get(5 * boardSpriteSize, 4 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteLevel.DESTRUCTIBLE_WALL3, allSprites.get(6 * boardSpriteSize, 4 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteLevel.DESTRUCTIBLE_WALL4, allSprites.get(7 * boardSpriteSize, 4 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+
+    sprites.put(TypeSpriteLevel.DESTRUCTIBLE_WALL_UNDER_BUILD1, allSprites.get(4 * boardSpriteSize, 5 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteLevel.DESTRUCTIBLE_WALL_UNDER_BUILD2, allSprites.get(5 * boardSpriteSize, 5 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteLevel.DESTRUCTIBLE_WALL_UNDER_BUILD3, allSprites.get(6 * boardSpriteSize, 5 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteLevel.DESTRUCTIBLE_WALL_UNDER_BUILD4, allSprites.get(7 * boardSpriteSize, 5 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
 
     //EXIT_DOOR
-    sprites.put(TypeSpriteLevel.EXIT_DOOR, allSprites.get(8 * boardSpriteSize, 3 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteLevel.EXIT_DOOR1, allSprites.get(8 * boardSpriteSize, 3 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteLevel.EXIT_DOOR2, allSprites.get(9 * boardSpriteSize, 3 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+
 
     return sprites;
   }
-  
+
   PImage invertSprite(PImage sprite) {
 
     PImage invertedSprite = createImage(sprite.width, sprite.height, ARGB);
@@ -98,5 +117,64 @@ class Sprites {
     }
     return invertedSprite;
   }
-  
+
+  void animatedWall(float posX, float posY, Board board, TypeSpriteLevel type) {
+    HashMap<TypeSpriteLevel, PImage> definedSprites = defSpritesLevel();
+    PImage[] animation = new PImage[4];
+
+    if (type == TypeSpriteLevel.DESTRUCTIBLE_WALL_UNDER_BUILD1) {
+      animation[0] = definedSprites.get(TypeSpriteLevel.DESTRUCTIBLE_WALL_UNDER_BUILD1);
+      animation[1] = definedSprites.get(TypeSpriteLevel.DESTRUCTIBLE_WALL_UNDER_BUILD2);
+      animation[2] = definedSprites.get(TypeSpriteLevel.DESTRUCTIBLE_WALL_UNDER_BUILD3);
+      animation[3] = definedSprites.get(TypeSpriteLevel.DESTRUCTIBLE_WALL_UNDER_BUILD4);
+    } else if (type == TypeSpriteLevel.DESTRUCTIBLE_WALL1) {
+      animation[0] = definedSprites.get(TypeSpriteLevel.DESTRUCTIBLE_WALL1);
+      animation[1] = definedSprites.get(TypeSpriteLevel.DESTRUCTIBLE_WALL2);
+      animation[2] = definedSprites.get(TypeSpriteLevel.DESTRUCTIBLE_WALL3);
+      animation[3] = definedSprites.get(TypeSpriteLevel.DESTRUCTIBLE_WALL4);
+    }
+
+    if (millis() - lastImageSwitchTime > interval) {
+      currentImageIndex = (currentImageIndex + 1) % animation.length;
+      lastImageSwitchTime = millis();
+    }
+    image(animation[currentImageIndex], posX, posY, board._cellSize, board._cellSize);
   }
+
+
+  void animatedDoor(float posX, float posY, Board board) {
+    HashMap<TypeSpriteLevel, PImage> definedSprites = defSpritesLevel();
+    PImage[] animation = new PImage[2];
+
+      animation[0] = definedSprites.get(TypeSpriteLevel.EXIT_DOOR1);
+      animation[1] = definedSprites.get(TypeSpriteLevel.EXIT_DOOR2);
+    
+    //Utilisation de random pour un rendu plus realiste de l'animation de la porte
+    if (millis() - lastDoorSwitchTime > int(random(50,500))) {
+      currentDoorIndex = (currentDoorIndex + 1) % animation.length;
+      lastDoorSwitchTime = millis();
+    }
+    image(animation[currentDoorIndex], posX, posY, board._cellSize, board._cellSize);
+  }
+  
+  
+  boolean areSpritesEqual(PImage sprite1, PImage sprite2) {
+    if (sprite1.width != sprite2.width || sprite1.height != sprite2.height) {
+      return false;
+    }
+
+    // Comparez les pixels de chaque image
+    for (int x = 0; x < sprite1.width; x++) {
+      for (int y = 0; y < sprite1.height; y++) {
+        int pixel1 = sprite1.get(x, y);
+        int pixel2 = sprite2.get(x, y);
+
+        if (pixel1 != pixel2) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+}

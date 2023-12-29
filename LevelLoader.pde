@@ -76,16 +76,16 @@ class LevelLoader {
 
         if (isDestructible) {
           board._cells[column][line] = TypeCell.DESTRUCTIBLE_WALL;
-          level[column][line] = (definedSprites.get(TypeSpriteLevel.DESTRUCTIBLE_WALL));
+          level[column][line] = (definedSprites.get(TypeSpriteLevel.DESTRUCTIBLE_WALL1));
 
           if (isUnderWall || isUnderDestructibleWall) {
-            level[column][line] = (definedSprites.get(TypeSpriteLevel.DESTRUCTIBLE_WALL_UNDER_BUILD));
+            level[column][line] = (definedSprites.get(TypeSpriteLevel.DESTRUCTIBLE_WALL_UNDER_BUILD1));
           }
         }
 
         if (isExit) {
           board._cells[column][line] = TypeCell.EXIT_DOOR;
-          level[column][line] = (definedSprites.get(TypeSpriteLevel.EXIT_DOOR));
+          level[column][line] = (definedSprites.get(TypeSpriteLevel.EXIT_DOOR1));
         }
       }
     }
