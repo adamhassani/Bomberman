@@ -17,5 +17,9 @@ void keyPressed() {
   game.handleKey(key);
 }
 
+void keyReleased() {
+  game.keyReleased();
+}
+
 void mousePressed() {
 }

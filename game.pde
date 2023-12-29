@@ -21,30 +21,28 @@ class Game
   }
 
   void handleKey(int k) {
-    int column = 1;
-    int line = 1;
-    if (column < 11 && line < 14 ) {
-      if ( k == 'd' || k == 'D' || keyCode == RIGHT ) {
-        PVector direction = new PVector(_board._cellSize, 0);
-        if (_board._cells[column][line+1] == TypeCell.WALL) {
-          _hero.move(direction);
-          column += 1;
-        }
-      }
-      if ( k == 's' || k == 'S' || keyCode == DOWN ) {
-        PVector direction = new PVector(0, _board._cellSize);
-        _hero.move(direction);
-      }
-      if ( k == 'q' || k == 'Q' || keyCode == LEFT ) {
-        PVector direction = new PVector(-_board._cellSize, 0 );
-        _hero.move(direction);
-        line -= 1;
-      }
-      if ( k == 'z' || k == 'Z' || keyCode == UP ) {
-        PVector direction = new PVector(0, -_board._cellSize);
-        _hero.move(direction);
-        column -= 1;
-      }
+    if ( k == 'd' || k == 'D' || keyCode == RIGHT ) {
+      _hero._direction.set(_board._cellSize, 0);
+      /*if (_board._cells[column][line+1] == TypeCell.WALL) {
+       _hero.move(_hero._direction);
+       column += 1;*/
     }
+    if ( k == 's' || k == 'S' || keyCode == DOWN ) {
+      _hero._direction.set(0, _board._cellSize);
+      _hero.move(_hero._direction);
+    }
+    if ( k == 'q' || k == 'Q' || keyCode == LEFT ) {
+      _hero._direction.set(-_board._cellSize, 0 );
+      _hero.move(_hero._direction);
+      //line -= 1;
+    }
+    if ( k == 'z' || k == 'Z' || keyCode == UP ) {
+      _hero._direction.set(0, -_board._cellSize);
+      _hero.move(_hero._direction);
+      //column -= 1;
+    }
+  }
+  void keyReleased() {
+    _hero._direction.set(0, 0); // Réinitialiser la direction à zéro lorsque la touche est relâchée
   }
 }

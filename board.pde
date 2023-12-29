@@ -13,7 +13,6 @@ class Board
   float _cellSize;
   PImage[][] _cellImage; // Tableau de toutes les cells du board
   LevelLoader level;
-
   Sprites sprite = new Sprites("data/img/tiles.png");
 
   Board(PVector drawPosition, PVector drawSize, int nbCellsX, int nbCellsY) {

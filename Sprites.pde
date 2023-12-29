@@ -1,8 +1,8 @@
 enum TypeSpriteHero
 {
-  GOING_LEFT, FRONT, GOING_RIGHT, BACK_LEFT, BACK, BACK_RIGHT, SIDE_LEFT, MOVE_SIDE_LEFT,
-    SIDE_RIGHT, MOVE_SIDE_RIGHT, START_DEATH, DEATH1, DEATH2, DEATH3, DEATH4, FINAL_DEATH,
-    SEMI_MOVE_LEFT, SEMI_MOVE_RIGHT
+  GOING_DOWN1, STATIC_DOWN, GOING_DOWN2, GOING_UP1, STATIC_UP, GOING_UP2, STATIC_LEFT, GOING_LEFT1, 
+  GOING_LEFT2, STATIC_RIGHT, GOING_RIGHT1, GOING_RIGHT2, START_DEATH, DEATH1, DEATH2, DEATH3, DEATH4, FINAL_DEATH,
+     
 }
 
 enum TypeSpriteLevel
@@ -17,15 +17,8 @@ class Sprites {
   int boardSpriteSize;
   int bombermanSpriteWidth;
   int bombermanSpriteHeight;
-  
-  //parametres pour l'animation du mur destructible
-  int currentImageIndex = 0;
-  int interval = 250; // interval en millisecondes
-  int lastImageSwitchTime = 0;
-  
-  //Parametres pour l'animation de la porte de sortie
-  int currentDoorIndex = 0;
-  int lastDoorSwitchTime = 0;
+
+
 
   Sprites(String filepath) {
     allSprites = loadImage(filepath);
@@ -38,20 +31,20 @@ class Sprites {
     HashMap<TypeSpriteHero, PImage> sprites = new HashMap<>();
 
     //STATIC
-    sprites.put(TypeSpriteHero.FRONT, allSprites.get(bombermanSpriteWidth, 0, bombermanSpriteWidth, bombermanSpriteHeight));
-    sprites.put(TypeSpriteHero.BACK, allSprites.get(4 * bombermanSpriteWidth, 0, bombermanSpriteWidth, bombermanSpriteHeight));
-    sprites.put(TypeSpriteHero.SIDE_LEFT, allSprites.get(0, bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
-    sprites.put(TypeSpriteHero.SIDE_RIGHT, allSprites.get(3 * bombermanSpriteWidth, bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteHero.STATIC_DOWN, allSprites.get(bombermanSpriteWidth, 0, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteHero.STATIC_UP, allSprites.get(4 * bombermanSpriteWidth, 0, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteHero.STATIC_LEFT, allSprites.get(0, bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteHero.STATIC_RIGHT, allSprites.get(3 * bombermanSpriteWidth, bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
 
     //MOVING
-    sprites.put(TypeSpriteHero.GOING_LEFT, allSprites.get(0, 0, bombermanSpriteWidth, bombermanSpriteHeight));
-    sprites.put(TypeSpriteHero.GOING_RIGHT, allSprites.get(2 * bombermanSpriteWidth, 0, bombermanSpriteWidth, bombermanSpriteHeight));
-    sprites.put(TypeSpriteHero.BACK_LEFT, allSprites.get(3 * bombermanSpriteWidth, 0, bombermanSpriteWidth, bombermanSpriteHeight));
-    sprites.put(TypeSpriteHero.BACK_RIGHT, allSprites.get(5 * bombermanSpriteWidth, 0, bombermanSpriteWidth, bombermanSpriteHeight));
-    sprites.put(TypeSpriteHero.MOVE_SIDE_LEFT, allSprites.get(bombermanSpriteWidth, bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
-    sprites.put(TypeSpriteHero.MOVE_SIDE_RIGHT, allSprites.get(4 * bombermanSpriteWidth, bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
-    sprites.put(TypeSpriteHero.SEMI_MOVE_LEFT, allSprites.get(2 * bombermanSpriteWidth, bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
-    sprites.put(TypeSpriteHero.SEMI_MOVE_RIGHT, allSprites.get(5 * bombermanSpriteWidth, bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteHero.GOING_DOWN1, allSprites.get(0, 0, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteHero.GOING_DOWN2, allSprites.get(2 * bombermanSpriteWidth, 0, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteHero.GOING_UP1, allSprites.get(3 * bombermanSpriteWidth, 0, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteHero.GOING_UP2, allSprites.get(5 * bombermanSpriteWidth, 0, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteHero.GOING_LEFT1, allSprites.get(bombermanSpriteWidth, bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteHero.GOING_LEFT2, allSprites.get(4 * bombermanSpriteWidth, bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteHero.GOING_RIGHT2, allSprites.get(2 * bombermanSpriteWidth, bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteHero.GOING_RIGHT2, allSprites.get(5 * bombermanSpriteWidth, bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
 
 
     //DEATH
@@ -146,18 +139,18 @@ class Sprites {
     HashMap<TypeSpriteLevel, PImage> definedSprites = defSpritesLevel();
     PImage[] animation = new PImage[2];
 
-      animation[0] = definedSprites.get(TypeSpriteLevel.EXIT_DOOR1);
-      animation[1] = definedSprites.get(TypeSpriteLevel.EXIT_DOOR2);
-    
+    animation[0] = definedSprites.get(TypeSpriteLevel.EXIT_DOOR1);
+    animation[1] = definedSprites.get(TypeSpriteLevel.EXIT_DOOR2);
+
     //Utilisation de random pour un rendu plus realiste de l'animation de la porte
-    if (millis() - lastDoorSwitchTime > int(random(50,500))) {
+    if (millis() - lastDoorSwitchTime > int(random(50, 500))) {
       currentDoorIndex = (currentDoorIndex + 1) % animation.length;
       lastDoorSwitchTime = millis();
     }
     image(animation[currentDoorIndex], posX, posY, board._cellSize, board._cellSize);
   }
-  
-  
+
+
   boolean areSpritesEqual(PImage sprite1, PImage sprite2) {
     if (sprite1.width != sprite2.width || sprite1.height != sprite2.height) {
       return false;
