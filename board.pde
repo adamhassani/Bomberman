@@ -12,6 +12,7 @@ class Board
   int _nbCellsY;
   float _cellSize;
   PImage[][] _cellImage; // Tableau de toutes les cells du board
+  LevelLoader level;
 
   Sprites sprite = new Sprites("data/img/tiles.png");
 
@@ -23,7 +24,7 @@ class Board
     _cellSize = _drawSize.x / nbCellsY;
     _cells = new TypeCell[nbCellsY][nbCellsX];
 
-    LevelLoader level = new LevelLoader("levels/level1.txt");
+    level = new LevelLoader("levels/level1.txt");
     _cellImage = level.loadLevel(this);
   }
 
