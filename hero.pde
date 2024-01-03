@@ -29,6 +29,7 @@ class Hero {
   }
 
   void update(Board board) {
+    //méthode pour faire les animations du hero
   }
 
   void drawIt() {

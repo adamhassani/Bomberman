@@ -1,6 +1,6 @@
 final int SCORE_BONUS = 20;
 final int SCORE_MONSTER_DESTROYED = 100;
-final color orange = color(247,134,0);
+final color orange = color(247, 134, 0);
 
 //parametres pour l'animation du mur destructible
 int currentImageIndex = 0;
@@ -12,4 +12,4 @@ int currentDoorIndex = 0;
 int lastDoorSwitchTime = 0;
 
 int column = 1;
-    int line = 1;
+int line = 1;

@@ -21,25 +21,25 @@ class Game
   }
 
   void handleKey(int k) {
-    if ( k == 'd' || k == 'D' || keyCode == RIGHT ) {
-      _hero._direction.set(_board._cellSize, 0);
-      /*if (_board._cells[column][line+1] == TypeCell.WALL) {
-       _hero.move(_hero._direction);
-       column += 1;*/
+    int i = 1;
+    int j = 1;
+    if (_board._cells[i++][j] == TypeCell.EMPTY ) {
+      if ( k == 'd' || k == 'D' || keyCode == RIGHT ) {
+        _hero._direction.set(_board._cellSize, 0);
+        i++;
+      }
     }
     if ( k == 's' || k == 'S' || keyCode == DOWN ) {
       _hero._direction.set(0, _board._cellSize);
-      _hero.move(_hero._direction);
+      i++;
     }
     if ( k == 'q' || k == 'Q' || keyCode == LEFT ) {
       _hero._direction.set(-_board._cellSize, 0 );
-      _hero.move(_hero._direction);
-      //line -= 1;
+      j--;
     }
     if ( k == 'z' || k == 'Z' || keyCode == UP ) {
       _hero._direction.set(0, -_board._cellSize);
-      _hero.move(_hero._direction);
-      //column -= 1;
+      i--;
     }
   }
   void keyReleased() {
