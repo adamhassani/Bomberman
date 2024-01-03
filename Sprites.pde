@@ -1,8 +1,7 @@
 enum TypeSpriteHero
 {
-  GOING_DOWN1, STATIC_DOWN, GOING_DOWN2, GOING_UP1, STATIC_UP, GOING_UP2, STATIC_LEFT, GOING_LEFT1, 
-  GOING_LEFT2, STATIC_RIGHT, GOING_RIGHT1, GOING_RIGHT2, START_DEATH, DEATH1, DEATH2, DEATH3, DEATH4, FINAL_DEATH,
-     
+  GOING_DOWN1, STATIC_DOWN, GOING_DOWN2, GOING_UP1, STATIC_UP, GOING_UP2, STATIC_LEFT, GOING_LEFT1,
+    GOING_LEFT2, STATIC_RIGHT, GOING_RIGHT1, GOING_RIGHT2, START_DEATH, DEATH1, DEATH2, DEATH3, DEATH4, FINAL_DEATH
 }
 
 enum TypeSpriteLevel
@@ -42,8 +41,8 @@ class Sprites {
     sprites.put(TypeSpriteHero.GOING_UP1, allSprites.get(3 * bombermanSpriteWidth, 0, bombermanSpriteWidth, bombermanSpriteHeight));
     sprites.put(TypeSpriteHero.GOING_UP2, allSprites.get(5 * bombermanSpriteWidth, 0, bombermanSpriteWidth, bombermanSpriteHeight));
     sprites.put(TypeSpriteHero.GOING_LEFT1, allSprites.get(bombermanSpriteWidth, bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
-    sprites.put(TypeSpriteHero.GOING_LEFT2, allSprites.get(4 * bombermanSpriteWidth, bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
-    sprites.put(TypeSpriteHero.GOING_RIGHT2, allSprites.get(2 * bombermanSpriteWidth, bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteHero.GOING_LEFT2, allSprites.get(2 * bombermanSpriteWidth, bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteHero.GOING_RIGHT1, allSprites.get(4 * bombermanSpriteWidth, bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
     sprites.put(TypeSpriteHero.GOING_RIGHT2, allSprites.get(5 * bombermanSpriteWidth, bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
 
 
@@ -127,11 +126,11 @@ class Sprites {
       animation[3] = definedSprites.get(TypeSpriteLevel.DESTRUCTIBLE_WALL4);
     }
 
-    if (millis() - lastImageSwitchTime > interval) {
-      currentImageIndex = (currentImageIndex + 1) % animation.length;
-      lastImageSwitchTime = millis();
+    if (millis() - lastImageSwitchTimeDesWall > intervalDesWall) {
+      currentImageIndexDesWall = (currentImageIndexDesWall + 1) % animation.length;
+      lastImageSwitchTimeDesWall = millis();
     }
-    image(animation[currentImageIndex], posX, posY, board._cellSize, board._cellSize);
+    image(animation[currentImageIndexDesWall], posX, posY, board._cellSize, board._cellSize);
   }
 
 
@@ -143,11 +142,11 @@ class Sprites {
     animation[1] = definedSprites.get(TypeSpriteLevel.EXIT_DOOR2);
 
     //Utilisation de random pour un rendu plus realiste de l'animation de la porte
-    if (millis() - lastDoorSwitchTime > int(random(50, 500))) {
-      currentDoorIndex = (currentDoorIndex + 1) % animation.length;
-      lastDoorSwitchTime = millis();
+    if (millis() - lastImageSwitchTimeExit > int(random(50, 500))) {
+      currentImageIndexExit = (currentImageIndexExit + 1) % animation.length;
+      lastImageSwitchTimeExit = millis();
     }
-    image(animation[currentDoorIndex], posX, posY, board._cellSize, board._cellSize);
+    image(animation[currentImageIndexExit], posX, posY, board._cellSize, board._cellSize);
   }
 
 
@@ -155,19 +154,84 @@ class Sprites {
     if (sprite1.width != sprite2.width || sprite1.height != sprite2.height) {
       return false;
     }
-
     // Comparez les pixels de chaque image
     for (int x = 0; x < sprite1.width; x++) {
       for (int y = 0; y < sprite1.height; y++) {
         int pixel1 = sprite1.get(x, y);
         int pixel2 = sprite2.get(x, y);
-
         if (pixel1 != pixel2) {
           return false;
         }
       }
     }
-
     return true;
+  }
+
+  void heroWalkingLeft(float posX, float posY, float size) {
+    HashMap<TypeSpriteHero, PImage> definedSprites = defSpriteBomberman();
+    PImage[] animation = new PImage[4];
+
+    animation[0] = definedSprites.get(TypeSpriteHero.GOING_LEFT1);
+    animation[1] = definedSprites.get(TypeSpriteHero.STATIC_LEFT);
+    animation[2] = definedSprites.get(TypeSpriteHero.GOING_LEFT2);
+    animation[3] = definedSprites.get(TypeSpriteHero.STATIC_LEFT);
+
+    if (millis() - lastImageSwitchTimeHero > intervalHero) {
+      currentImageIndexHero = (currentImageIndexHero + 1) % animation.length;
+      lastImageSwitchTimeHero = millis();
+    }
+    image(animation[currentImageIndexHero], posX, posY, 2 * size / 3, size);
+  }
+  
+  
+  void heroWalkingRight(float posX, float posY, float size) {
+    HashMap<TypeSpriteHero, PImage> definedSprites = defSpriteBomberman();
+    PImage[] animation = new PImage[4];
+
+    animation[0] = definedSprites.get(TypeSpriteHero.GOING_RIGHT1);
+    animation[1] = definedSprites.get(TypeSpriteHero.STATIC_RIGHT);
+    animation[2] = definedSprites.get(TypeSpriteHero.GOING_RIGHT2);
+    animation[3] = definedSprites.get(TypeSpriteHero.STATIC_RIGHT);
+
+
+    if (millis() - lastImageSwitchTimeHero > intervalHero) {
+      currentImageIndexHero = (currentImageIndexHero + 1) % animation.length;
+      lastImageSwitchTimeHero = millis();
+    }
+    image(animation[currentImageIndexHero], posX, posY, 2 * size / 3, size);
+  }
+  
+  
+  void heroWalkingUp(float posX, float posY, float size) {
+    HashMap<TypeSpriteHero, PImage> definedSprites = defSpriteBomberman();
+    PImage[] animation = new PImage[4];
+
+    animation[0] = definedSprites.get(TypeSpriteHero.GOING_UP1);
+    animation[1] = definedSprites.get(TypeSpriteHero.STATIC_UP);
+    animation[2] = definedSprites.get(TypeSpriteHero.GOING_UP2);
+    animation[3] = definedSprites.get(TypeSpriteHero.STATIC_UP);
+
+    if (millis() - lastImageSwitchTimeHero > intervalHero) {
+      currentImageIndexHero = (currentImageIndexHero + 1) % animation.length;
+      lastImageSwitchTimeHero = millis();
+    }
+    image(animation[currentImageIndexHero], posX, posY, 2 * size / 3, size);
+  }
+  
+  
+  void heroWalkingDown(float posX, float posY, float size) {
+    HashMap<TypeSpriteHero, PImage> definedSprites = defSpriteBomberman();
+    PImage[] animation = new PImage[4];
+
+    animation[0] = definedSprites.get(TypeSpriteHero.GOING_DOWN1);
+    animation[1] = definedSprites.get(TypeSpriteHero.STATIC_DOWN);
+    animation[2] = definedSprites.get(TypeSpriteHero.GOING_DOWN2);
+    animation[3] = definedSprites.get(TypeSpriteHero.STATIC_DOWN);
+
+    if (millis() - lastImageSwitchTimeHero > intervalHero) {
+      currentImageIndexHero = (currentImageIndexHero + 1) % animation.length;
+      lastImageSwitchTimeHero = millis();
+    }
+    image(animation[currentImageIndexHero], posX, posY, 2 * size / 3, size);
   }
 }

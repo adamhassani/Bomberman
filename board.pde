@@ -53,6 +53,7 @@ class Board
         else if (sprite.areSpritesEqual(_cellImage[column][line], sprite.defSpritesLevel().get(TypeSpriteLevel.EXIT_DOOR1))) {
           sprite.animatedDoor(posX, posY, this);
         } 
+        //Sprite sans animation
         else {
           image(_cellImage[column][line], posX, posY, _cellSize, _cellSize);
         }
