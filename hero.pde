@@ -29,8 +29,8 @@ class Hero {
     // Calculate the target cell position based on the current position and direction
     int targetCellX = _cellX + (int)(_direction.x / _size);
     int targetCellY = _cellY + (int)(_direction.y / _size);
-    println("cellX =", _cellX," cellY =", _cellY);
-    println("prochaine cellX =", targetCellX," prochaine cellY =", targetCellY);
+    //println("cellX =", _cellX," cellY =", _cellY);
+    //println("prochaine cellX =", targetCellX," prochaine cellY =", targetCellY);
 
     // Check if the target cell is within the board boundaries and not a wall
     if (targetCellX >= 0 && targetCellX < board._nbCellsX &&

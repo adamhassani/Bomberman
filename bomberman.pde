@@ -11,11 +11,15 @@ void setup() {
 }
 
 void draw() {
-  game.update();
-  game.drawIt();
+  menu.drawIt();
+  if (menu.isPlaying) {
+    game.update();
+    game.drawIt();
+  }
 }
 
 void keyPressed() {
+  menu.handleKey();
   game.handleKey(key);
 }
 
