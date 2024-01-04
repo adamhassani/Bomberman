@@ -21,3 +21,6 @@ boolean keyUp = false;
 boolean keyDown = false;
 boolean keyRight = false;
 boolean keyLeft = false;
+
+//Parametres du hero
+final float speed = 2.0;
