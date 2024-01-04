@@ -1,26 +1,26 @@
 class LevelLoader {
 
   String[] _lines;
-  Sprites _levelSprites;
+  Sprites _sprites;
 
   LevelLoader(String filePath) {
 
     _lines = loadStrings(filePath);
-    _levelSprites = new Sprites("data/img/tiles.png");
+    _sprites = new Sprites("data/img/tiles.png");
   }
 
   PImage[][] loadLevel(Board board) {
 
     PImage[][] level = new PImage[board._cells.length][board._cells[0].length];
     
-    HashMap<TypeSpriteLevel, PImage> definedSprites = _levelSprites.defSpritesLevel();
+    HashMap<TypeSpriteLevel, PImage> definedSprites = _sprites.defSpritesLevel();
     
     //Creation du plateau de jeu
     for ( int column = 0; column < board._cells.length; column++) {
       for ( int line = 0; line < board._cells[column].length; line++) {
 
         //Determine l'etat de la cellule actuelle.
-        final boolean isEmpty = _lines[line].charAt(column) == 'v' || _lines[line].charAt(column) == 'B' || _lines[line].charAt(column) == 'M' || _lines[line].charAt(column) == 'o';
+        final boolean isEmpty = _lines[line].charAt(column) == 'v' || _lines[line].charAt(column) == 'B' || _lines[line].charAt(column) == 'M';
         final boolean isWall = _lines[line].charAt(column) == 'x';
         final boolean isDestructible = _lines[line].charAt(column) == 'o';
         final boolean isExit = _lines[line].charAt(column) == 'S';

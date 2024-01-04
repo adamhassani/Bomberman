@@ -180,7 +180,7 @@ class Sprites {
       currentImageIndexHero = (currentImageIndexHero + 1) % animation.length;
       lastImageSwitchTimeHero = millis();
     }
-    image(animation[currentImageIndexHero], posX, posY, 2 * size / 3, size);
+    image(animation[currentImageIndexHero], posX, posY, size, size * 3/2);
   }
   
   
@@ -198,7 +198,7 @@ class Sprites {
       currentImageIndexHero = (currentImageIndexHero + 1) % animation.length;
       lastImageSwitchTimeHero = millis();
     }
-    image(animation[currentImageIndexHero], posX, posY, 2 * size / 3, size);
+    image(animation[currentImageIndexHero], posX, posY, size, size * 3/2);
   }
   
   
@@ -215,7 +215,7 @@ class Sprites {
       currentImageIndexHero = (currentImageIndexHero + 1) % animation.length;
       lastImageSwitchTimeHero = millis();
     }
-    image(animation[currentImageIndexHero], posX, posY, 2 * size / 3, size);
+    image(animation[currentImageIndexHero], posX, posY, size, size * 3/2);
   }
   
   
@@ -232,6 +232,6 @@ class Sprites {
       currentImageIndexHero = (currentImageIndexHero + 1) % animation.length;
       lastImageSwitchTimeHero = millis();
     }
-    image(animation[currentImageIndexHero], posX, posY, 2 * size / 3, size);
+    image(animation[currentImageIndexHero], posX, posY, size, size * 3/2);
   }
 }

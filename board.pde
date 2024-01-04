@@ -12,8 +12,7 @@ class Board
   int _nbCellsY;
   float _cellSize;
   PImage[][] _cellImage; // Tableau de toutes les cells du board
-  LevelLoader level;
-  Sprites sprite = new Sprites("data/img/tiles.png");
+  LevelLoader _level;
 
   Board(PVector drawPosition, PVector drawSize, int nbCellsX, int nbCellsY) {
     _drawPosition = drawPosition;
@@ -22,9 +21,8 @@ class Board
     _nbCellsY = nbCellsY;
     _cellSize = _drawSize.x / nbCellsY;
     _cells = new TypeCell[nbCellsY][nbCellsX];
-
-    level = new LevelLoader("levels/level1.txt");
-    _cellImage = level.loadLevel(this);
+    _level = new LevelLoader("levels/level1.txt");
+    _cellImage = _level.loadLevel(this);
   }
 
   PVector getCellCenter(float i, float j) {
@@ -42,16 +40,16 @@ class Board
         float posY = (2 + line) * _cellSize + _cellSize/2;
 
         //Animation Mur destructible avec ombre
-        if (sprite.areSpritesEqual(_cellImage[column][line], sprite.defSpritesLevel().get(TypeSpriteLevel.DESTRUCTIBLE_WALL_UNDER_BUILD1))) {
-          sprite.animatedWall(posX, posY, this, TypeSpriteLevel.DESTRUCTIBLE_WALL_UNDER_BUILD1);
+        if (_level._sprites.areSpritesEqual(_cellImage[column][line], _level._sprites.defSpritesLevel().get(TypeSpriteLevel.DESTRUCTIBLE_WALL_UNDER_BUILD1))) {
+          _level._sprites.animatedWall(posX, posY, this, TypeSpriteLevel.DESTRUCTIBLE_WALL_UNDER_BUILD1);
         } 
         //Animation Mur destructible sans ombre
-        else if (sprite.areSpritesEqual(_cellImage[column][line], sprite.defSpritesLevel().get(TypeSpriteLevel.DESTRUCTIBLE_WALL1))) {
-          sprite.animatedWall(posX, posY, this, TypeSpriteLevel.DESTRUCTIBLE_WALL1);
+        else if (_level._sprites.areSpritesEqual(_cellImage[column][line], _level._sprites.defSpritesLevel().get(TypeSpriteLevel.DESTRUCTIBLE_WALL1))) {
+          _level._sprites.animatedWall(posX, posY, this, TypeSpriteLevel.DESTRUCTIBLE_WALL1);
         } 
         //Animation Porte de sortie
-        else if (sprite.areSpritesEqual(_cellImage[column][line], sprite.defSpritesLevel().get(TypeSpriteLevel.EXIT_DOOR1))) {
-          sprite.animatedDoor(posX, posY, this);
+        else if (_level._sprites.areSpritesEqual(_cellImage[column][line], _level._sprites.defSpritesLevel().get(TypeSpriteLevel.EXIT_DOOR1))) {
+          _level._sprites.animatedDoor(posX, posY, this);
         } 
         //Sprite sans animation
         else {

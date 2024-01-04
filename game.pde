@@ -7,9 +7,9 @@ class Game
 
   Game() {
     PVector origin = new PVector(0, 2*(width / 13));
-    PVector drawSize = new PVector(width, height*14/16);
+    PVector drawSize = new PVector(width, height);
     _board = new Board(origin, drawSize, 13, 15);
-    _hero = new Hero();
+    _hero = new Hero(_board);
   }
 
   void update() {
@@ -17,13 +17,13 @@ class Game
 
   void drawIt() {
     _board.drawIt();
-    _hero.drawIt();
+    _hero.drawIt(_board);
   }
 
   void handleKey(int k) {
     //A l'interieur de chaque boucle, premiere action pour bouger le personnage et deuxieme pour activer l'animation
     if ( k == 'd' || k == 'D' || keyCode == RIGHT ) {
-      _hero._direction.set(_board._cellSize, 0);
+      _hero._direction.set(_hero._size, 0);
       if (!keyRight) {
         keyUp = false;
         keyDown = false;
@@ -32,7 +32,7 @@ class Game
       }
     }
     if ( k == 's' || k == 'S' || keyCode == DOWN ) {
-      _hero._direction.set(0, _board._cellSize);
+      _hero._direction.set(0, _hero._size);
       if (!keyDown) {
         keyUp = false;
         keyDown = true;
@@ -41,7 +41,7 @@ class Game
       }
     }
     if ( k == 'q' || k == 'Q' || keyCode == LEFT ) {
-      _hero._direction.set(-_board._cellSize, 0 );
+      _hero._direction.set(-_hero._size, 0 );
       if (!keyLeft) {
         keyUp = false;
         keyDown = false;
@@ -50,7 +50,7 @@ class Game
       }
     }
     if ( k == 'z' || k == 'Z' || keyCode == UP ) {
-      _hero._direction.set(0, -_board._cellSize);
+      _hero._direction.set(0, -_hero._size);
       if (!keyUp) {
         keyUp = true;
         keyDown = false;
