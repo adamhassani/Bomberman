@@ -15,9 +15,9 @@ class Hero {
   Sprites _heroSprite;
 
   Hero() {
-    _cellX = height / 32;
-    _cellY = 2 * height / 13;
-    _size = 75;
+    _cellX = 25;
+    _cellY = 125;
+    _size = round(width/15);
     _position = new PVector(_cellX, _cellY);
     _wasHit = false;
     _heroSprite = new Sprites("data/img/characters.png");
@@ -59,7 +59,7 @@ class Hero {
     if (!keyLeft && !keyRight && !keyUp && !keyDown) {
       PImage currentSprite = _heroSprite.defSpriteBomberman().get(_facing);
       // Utilisez la sprite statique associée à la dernière direction
-      image(currentSprite, center.x, center.y, 2 * _size / 3, _size);
+      image(currentSprite, center.x, center.y, _size, 3 * _size / 2);
     }
   }
 }

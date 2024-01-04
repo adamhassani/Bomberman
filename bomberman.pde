@@ -1,11 +1,13 @@
 import java.util.HashMap;
 
 Game game;
+Menu menu;
 
 
 void setup() {
   size(800, 800, P2D);
   game = new Game();
+  menu = new Menu();
 }
 
 void draw() {
@@ -22,4 +24,5 @@ void keyReleased() {
 }
 
 void mousePressed() {
+  menu.handleMouse();
 }
