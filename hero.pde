@@ -25,7 +25,7 @@ class Hero {
     _facing = TypeSpriteHero.STATIC_DOWN;
   }
 
-  void move(Board board,PVector direction) {
+  void move(Board board) {
     // Calculate the target cell position based on the current position and direction
     int targetCellX = _cellX + (int)(_direction.x / _size);
     int targetCellY = _cellY + (int)(_direction.y / _size);
@@ -50,7 +50,7 @@ class Hero {
   }
 
   void drawIt(Board board) {
-    move(board, _direction);
+    move(board);
     PVector center = game._board.getCellCenter(_cellX, _cellY);
     float posX = _cellX * _size;
     float posY = (_cellY + 2) * _size;
