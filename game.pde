@@ -14,6 +14,7 @@ class Game
   }
 
   void update() {
+    _hero.update(_board);
   }
 
   void drawIt() {
