@@ -16,10 +16,10 @@ class Hero {
 
   Hero(Board board) {
     _cellX = 1;
-    _cellY = 1;
+    _cellY = 1 + board._margin;
     _size = board._cellSize;
-    _position = new PVector(1 * _size, (1 + 2) * _size);
-    _positionCenter = board.getCellCenter(_position.x, _position.y - (_size * 2));
+    _position = new PVector(_size, 3 * _size);
+    _positionCenter = board.getCellCenter(_position.x, _position.y);
     _wasHit = false;
     _heroSprite = new Sprites("data/img/characters.png");
     _direction = new PVector(0, 0);
@@ -29,47 +29,74 @@ class Hero {
   void move(Board board) {
     int targetCellX = _cellX + (int)(_direction.x / _size);
     int targetCellY = _cellY + (int)(_direction.y / _size);
-    println("cellX =", _cellX, " cellY =", _cellY);
-    println("prochaine cellX =", targetCellX, " prochaine cellY =", targetCellY);
 
-    //On verfie si la case dans laquel on veut aller est vide
-    if (targetCellX >= 0 && targetCellX < board._nbCellsX &&
+    //Definiton de la hitbox du hero
+    boolean targetCellEmpty = targetCellX >= 0 && targetCellX < board._nbCellsX &&
       targetCellY >= 0 && targetCellY < board._nbCellsY &&
-      board._cells[targetCellX][targetCellY] == TypeCell.EMPTY) {
+      board._cells[targetCellX][targetCellY-board._margin] == TypeCell.EMPTY;
+    boolean hitboxRight = _direction.x > 0 && _position.x + _size < (_cellX + 1) * _size;
+    boolean hitboxLeft = _direction.x < 0 && _position.x > _cellX * _size;
+    boolean hitboxDown = _direction.y > 0 && _position.y + _size < (_cellY + 1) * _size;
+    boolean hitboxUp = _direction.y < 0 && _position.y > _cellY * _size;
 
+    if (targetCellEmpty) {
       _position.x += _direction.x/18;
       _position.y += _direction.y/18;
+    }
+    if (hitboxRight) {
+      _position.x += _direction.x/18;
+      _position.y = _cellY * _size;
+    }
+    if (hitboxLeft) {
+      _position.x += _direction.x/18;
+      _position.y = _cellY * _size;
+    }
+    if (hitboxDown) {
+      _position.y += _direction.y/18;
+      _position.x = _cellX * _size;
+    }
+    if (hitboxUp) {
+      _position.y += _direction.y/18;
+      _position.x = _cellX * _size;
     }
   }
 
   void update(Board board) {
-    _positionCenter = board.getCellCenter(_position.x, _position.y - (_size * 2));
+    heroCoordinates(board);
+  }
+  
+  void heroCoordinates(Board board){
+    boolean newCellXRight = _positionCenter.x > (_cellX + 1) * _size;
+    boolean newCellXLeft  = _positionCenter.x < _cellX * _size;
+    boolean newCellYUp    = _positionCenter.y > (_cellY + 1) * _size;
+    boolean newCellYDown  = _positionCenter.y < _cellY * _size;
+    
+    _positionCenter       = board.getCellCenter(_position.x, _position.y);
 
+    if (newCellXRight) {
+      _cellX++;
+    }
 
-    if (_positionCenter.x > board.getCellCenter((_cellX + 1) * _size, _cellY * _size).x) {
-      _cellX ++;
+    if (newCellXLeft) {
+      _cellX--;
     }
-    
-    if (_positionCenter.x < board.getCellCenter((_cellX + -1) * _size, _cellY * _size).x) {
-      _cellX = _cellX -1;
+
+    if (newCellYUp) {
+      _cellY++;
     }
-    
-    if (_positionCenter.y > board.getCellCenter(_cellX  * _size, (_cellY + 1) * _size).y) {
-      _cellY ++;
-    }
-    
-    if (_positionCenter.y < board.getCellCenter(_cellX  * _size, (_cellY - 1) * _size).y) {
-      _cellY = _cellY -1;
+
+    if (newCellYDown) {
+      _cellY--;
     }
   }
 
   void drawIt(Board board) {
-    move(board);
-    float posX = _position.x ;
-    //println("position x = ", _position.x);
-    float posY = _position.y;
-    //println("position y = ", _position.y);
 
+    move(board);
+    float posX = _position.x;
+    float posY = _position.y - _size/2;
+
+    //println(_position.x, _position.y);
 
     if (keyLeft) {
       _heroSprite.heroWalkingLeft(posX, posY, _size);

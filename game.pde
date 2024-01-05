@@ -13,7 +13,7 @@ class Game
     PVector drawSize = new PVector(width, height);
     _board = new Board(origin, drawSize, 13, 15);
     _hero = new Hero(_board);
-    _bomb = new Bomb(game._hero, game._board);
+    _bomb = new Bomb(_hero, _board);
   }
 
   void update() {
@@ -23,6 +23,7 @@ class Game
 
   void drawIt() {
     _board.drawIt();
+    _bomb.drawIt();
     _hero.drawIt(_board);
   }
 
@@ -65,7 +66,7 @@ class Game
       }
     }
     if (key == 'b'){
-      _bomb.drawIt();
+      _bomb.startCountdown(_board);
     } 
   }
 
