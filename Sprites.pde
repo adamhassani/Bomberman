@@ -182,8 +182,8 @@ class Sprites {
     }
     image(animation[currentImageIndexHero], posX, posY, size, size * 3/2);
   }
-  
-  
+
+
   void heroWalkingRight(float posX, float posY, float size) {
     HashMap<TypeSpriteHero, PImage> definedSprites = defSpriteBomberman();
     PImage[] animation = new PImage[4];
@@ -200,8 +200,8 @@ class Sprites {
     }
     image(animation[currentImageIndexHero], posX, posY, size, size * 3/2);
   }
-  
-  
+
+
   void heroWalkingUp(float posX, float posY, float size) {
     HashMap<TypeSpriteHero, PImage> definedSprites = defSpriteBomberman();
     PImage[] animation = new PImage[4];
@@ -217,8 +217,8 @@ class Sprites {
     }
     image(animation[currentImageIndexHero], posX, posY, size, size * 3/2);
   }
-  
-  
+
+
   void heroWalkingDown(float posX, float posY, float size) {
     HashMap<TypeSpriteHero, PImage> definedSprites = defSpriteBomberman();
     PImage[] animation = new PImage[4];
