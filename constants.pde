@@ -17,7 +17,7 @@ int currentImageIndexHero = 0;
 int lastImageSwitchTimeHero = 0;
 final int intervalHero = 200;
 
-//Etat des touches pour le moivement du hero
+//Etat des touches pour le mouvement du hero
 boolean keyUp = false;
 boolean keyDown = false;
 boolean keyRight = false;
@@ -25,3 +25,8 @@ boolean keyLeft = false;
 
 //Parametres du hero
 final float speed = 2.0;
+
+//Paramètres pour l'animation des bombes
+int currentImageIndexBomb = 0;
+int lastImageSwitchTimeBomb = 0;
+final int intervalBomb = 150;

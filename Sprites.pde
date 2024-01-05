@@ -11,6 +11,11 @@ enum TypeSpriteLevel
     DESTRUCTIBLE_WALL_UNDER_BUILD1, DESTRUCTIBLE_WALL_UNDER_BUILD2, DESTRUCTIBLE_WALL_UNDER_BUILD3, DESTRUCTIBLE_WALL_UNDER_BUILD4, EXIT_DOOR1, EXIT_DOOR2
 }
 
+enum TypeSpriteBomb
+{
+  SMALL_SIZE_BOMB, MEDIUM_SIZE_BOMB, BIG_SIZE_BOMB
+}
+
 class Sprites {
   PImage allSprites;
   int boardSpriteSize;
@@ -96,6 +101,16 @@ class Sprites {
 
     return sprites;
   }
+  HashMap<TypeSpriteBomb, PImage> defSpriteBomb() {
+
+    HashMap<TypeSpriteBomb, PImage> sprites = new HashMap<>();
+
+    sprites.put(TypeSpriteBomb.SMALL_SIZE_BOMB, allSprites.get(5 * boardSpriteSize, 3 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteBomb.MEDIUM_SIZE_BOMB, allSprites.get(6 * boardSpriteSize, 3 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteBomb.BIG_SIZE_BOMB, allSprites.get(7 * boardSpriteSize, 3 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+
+    return sprites;
+  }
 
   PImage invertSprite(PImage sprite) {
 
@@ -149,7 +164,6 @@ class Sprites {
     image(animation[currentImageIndexExit], posX, posY, board._cellSize, board._cellSize);
   }
 
-
   boolean areSpritesEqual(PImage sprite1, PImage sprite2) {
     if (sprite1.width != sprite2.width || sprite1.height != sprite2.height) {
       return false;
@@ -167,6 +181,22 @@ class Sprites {
     return true;
   }
 
+  void animatedBomb(float posX, float posY, float size) {
+    HashMap<TypeSpriteBomb, PImage> definedSprites = defSpriteBomb();
+    PImage[] animation = new PImage[4];
+
+    animation[0] = definedSprites.get(TypeSpriteBomb.SMALL_SIZE_BOMB);
+    animation[1] = definedSprites.get(TypeSpriteBomb.MEDIUM_SIZE_BOMB);
+    animation[2] = definedSprites.get(TypeSpriteBomb.BIG_SIZE_BOMB);
+    animation[3] = definedSprites.get(TypeSpriteBomb.MEDIUM_SIZE_BOMB);
+
+    if (millis() - lastImageSwitchTimeBomb > intervalBomb) {
+      currentImageIndexBomb = (currentImageIndexBomb + 1) % animation.length;
+      lastImageSwitchTimeBomb = millis();
+    }
+    image(animation[currentImageIndexBomb], posX, posY, size, size);
+  }
+
   void heroWalkingLeft(float posX, float posY, float size) {
     HashMap<TypeSpriteHero, PImage> definedSprites = defSpriteBomberman();
     PImage[] animation = new PImage[4];
@@ -182,8 +212,8 @@ class Sprites {
     }
     image(animation[currentImageIndexHero], posX, posY, size, size * 3/2);
   }
-  
-  
+
+
   void heroWalkingRight(float posX, float posY, float size) {
     HashMap<TypeSpriteHero, PImage> definedSprites = defSpriteBomberman();
     PImage[] animation = new PImage[4];
@@ -200,8 +230,8 @@ class Sprites {
     }
     image(animation[currentImageIndexHero], posX, posY, size, size * 3/2);
   }
-  
-  
+
+
   void heroWalkingUp(float posX, float posY, float size) {
     HashMap<TypeSpriteHero, PImage> definedSprites = defSpriteBomberman();
     PImage[] animation = new PImage[4];
@@ -217,8 +247,8 @@ class Sprites {
     }
     image(animation[currentImageIndexHero], posX, posY, size, size * 3/2);
   }
-  
-  
+
+
   void heroWalkingDown(float posX, float posY, float size) {
     HashMap<TypeSpriteHero, PImage> definedSprites = defSpriteBomberman();
     PImage[] animation = new PImage[4];

@@ -67,7 +67,7 @@ class Menu {
     if (key == ESC) {
       key=0;
       isPlaying = false;
-      menu.drawIt();
+      drawIt();
     }
   }
 
