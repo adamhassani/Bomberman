@@ -2,6 +2,8 @@ class Game
 {
   Board _board;
   Hero _hero;
+  Bomb _bomb;
+
   PVector _drawSize;
 
   String _levelName;
@@ -11,10 +13,12 @@ class Game
     PVector drawSize = new PVector(width, height);
     _board = new Board(origin, drawSize, 13, 15);
     _hero = new Hero(_board);
+    _bomb = new Bomb(game._hero, game._board);
   }
 
   void update() {
     _hero.update(_board);
+    _bomb.update(_board, _hero);
   }
 
   void drawIt() {
@@ -60,6 +64,9 @@ class Game
         keyRight = false;
       }
     }
+    if (key == 'b'){
+      _bomb.drawIt();
+    } 
   }
 
   void keyReleased() {

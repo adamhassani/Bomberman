@@ -3,25 +3,24 @@ class Bomb {
   int _cellX, _cellY;
   int _explosionRadius;
   Sprites _BombSprite;
+  PVector _position;
 
-  Bomb() {
+  Bomb(Hero hero, Board board) {
     _timeToExplode = 500;
-    _cellX = game._hero._cellX;
-    _cellY = game._hero._cellY;
+    _cellX = hero._cellX;
+    _cellY = hero._cellY;
+    _position = new PVector(_cellX * board._cellSize, ((_cellY + 2) * board._cellSize) + board._cellSize / 2);
     _explosionRadius = 1;
     _BombSprite = new Sprites("data/img/tiles.png");
   }
   
   void drawIt(){
-    _BombSprite.animatedBomb(_cellX,_cellY,game._board._cellSize);
+    _BombSprite.animatedBomb(_position.x,_position.y,game._board._cellSize);
   }
   
-  void handleKey(){
-    if (key == 'b'){
-      drawIt();
-    } 
-  }
 
   void update(Board board, Hero hero) {
+    _cellX = hero._cellX;
+    _cellY = hero._cellY;
   }
 }

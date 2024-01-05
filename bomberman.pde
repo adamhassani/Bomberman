@@ -2,14 +2,12 @@ import java.util.HashMap;
 
 Game game;
 Menu menu;
-Bomb bomb;
 
 
 void setup() {
   size(800, 800, P2D);
   game = new Game();
   menu = new Menu();
-  bomb = new Bomb();
 }
 
 void draw() {
@@ -22,7 +20,6 @@ void draw() {
 
 void keyPressed() {
   menu.handleKey();
-  bomb.handleKey();
   game.handleKey(key);
   
 }
