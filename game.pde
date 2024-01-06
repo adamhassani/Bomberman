@@ -12,22 +12,17 @@ class Game
     PVector origin = new PVector(0, 2*(width / 13));
     PVector drawSize = new PVector(width, height);
     _board = new Board(origin, drawSize, 13, 15);
-    _hero = new Hero(_board);
+    _hero = new Hero(_board, _bomb);
     _bomb = new Bomb(_hero, _board);
   }
 
   void update() {
-    _hero.update(_board);
+    _hero.update(_board, _bomb);
     _bomb.update(_board, _hero);
   }
 
   void drawIt() {
     _board.drawIt();
-    PVector position = new PVector(_hero._cellX, _hero._cellY);
-    if(_hero.allowPutBomb(position, _bomb._start)){
-    _bomb.drawIt(position);
-    }
-    _bomb._start = false;
     _bomb.drawIt();
     _hero.drawIt(_board);
   }
@@ -71,12 +66,8 @@ class Game
       }
     }
     if (key == 'b') {
-      _bomb._start = true;
-      
-    }
-    if (key == 'b'){
       _bomb.startCountdown(_board);
-    } 
+    }
   }
 
   void keyReleased() {

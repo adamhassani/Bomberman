@@ -22,7 +22,7 @@ class Board
     _nbCellsY = nbCellsY;
     _cellSize = _drawSize.x / nbCellsY;
     _cells = new TypeCell[nbCellsY][nbCellsX];
-    _level = new LevelLoader("levels/level2.txt");
+    _level = new LevelLoader("levels/level1.txt");
     _cellImage = _level.loadLevel(this);
     _margin = 2;
   }
@@ -31,9 +31,8 @@ class Board
     PVector center = new PVector(i + _cellSize / 2, j + _cellSize / 2);
     return center;
   }
-  
-  void update(Bomb bomb){
-    
+
+  void update(Bomb bomb) {
   }
 
   void drawIt() {
@@ -48,20 +47,23 @@ class Board
         //Animation Mur destructible avec ombre
         if (_level._sprites.areSpritesEqual(_cellImage[column][line], _level._sprites.defSpritesLevel().get(TypeSpriteLevel.DESTRUCTIBLE_WALL_UNDER_BUILD1))) {
           _level._sprites.animatedWall(posX, posY, this, TypeSpriteLevel.DESTRUCTIBLE_WALL_UNDER_BUILD1);
-        } 
+        }
         //Animation Mur destructible sans ombre
         else if (_level._sprites.areSpritesEqual(_cellImage[column][line], _level._sprites.defSpritesLevel().get(TypeSpriteLevel.DESTRUCTIBLE_WALL1))) {
           _level._sprites.animatedWall(posX, posY, this, TypeSpriteLevel.DESTRUCTIBLE_WALL1);
-        } 
+        }
         //Animation Porte de sortie
         else if (_level._sprites.areSpritesEqual(_cellImage[column][line], _level._sprites.defSpritesLevel().get(TypeSpriteLevel.EXIT_DOOR1))) {
           _level._sprites.animatedDoor(posX, posY, this);
-        } 
+        }
         //Sprite sans animation
         else {
           image(_cellImage[column][line], posX, posY, _cellSize, _cellSize);
         }
       }
     }
+  }
+
+  void updateDraw() {
   }
 }

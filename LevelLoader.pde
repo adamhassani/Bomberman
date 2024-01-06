@@ -2,6 +2,8 @@ class LevelLoader {
 
   String[] _lines;
   Sprites _sprites;
+  PVector _spawnPointHero;
+  PVector _spawnPointMob;
 
   LevelLoader(String filePath) {
 
@@ -12,15 +14,17 @@ class LevelLoader {
   PImage[][] loadLevel(Board board) {
 
     PImage[][] level = new PImage[board._cells.length][board._cells[0].length];
-    
+
     HashMap<TypeSpriteLevel, PImage> definedSprites = _sprites.defSpritesLevel();
-    
+
     //Creation du plateau de jeu
     for ( int column = 0; column < board._cells.length; column++) {
       for ( int line = 0; line < board._cells[column].length; line++) {
 
         //Determine l'etat de la cellule actuelle.
         final boolean isEmpty = _lines[line].charAt(column) == 'v' || _lines[line].charAt(column) == 'B' || _lines[line].charAt(column) == 'M';
+        final boolean isHero = _lines[line].charAt(column) == 'B';
+        final boolean isMob = _lines[line].charAt(column) == 'M';
         final boolean isWall = _lines[line].charAt(column) == 'x';
         final boolean isDestructible = _lines[line].charAt(column) == 'o';
         final boolean isExit = _lines[line].charAt(column) == 'S';
@@ -44,11 +48,29 @@ class LevelLoader {
         if (isEmpty) {
           board._cells[column][line] = TypeCell.EMPTY;
           level[column][line] = (definedSprites.get(TypeSpriteLevel.EMPTY));
+          if (isHero) {
+            _spawnPointHero = new PVector(column, line);
+          }
+          if (isMob) {
+            _spawnPointMob = new PVector(column, line);
+          }
 
           if (isUnderWall) {
             level[column][line] = (definedSprites.get(TypeSpriteLevel.EMPTY_UNDER_BUILD));
+            if (isHero) {
+              _spawnPointHero = new PVector(column, line);
+            }
+            if (isMob) {
+              _spawnPointMob = new PVector(column, line);
+            }
           } else if (isUnderDestructibleWall) {
             level[column][line] = (definedSprites.get(TypeSpriteLevel.EMPTY_UNDER_DESTRUCTIBLE_WALL));
+            if (isHero) {
+              _spawnPointHero = new PVector(column, line);
+            }
+            if (isMob) {
+              _spawnPointMob = new PVector(column, line);
+            }
           }
         }
 

@@ -11,20 +11,22 @@ class Hero {
   PVector _direction;
   //Orientation du Hero
   TypeSpriteHero _facing;
+  int _lives;
 
   Sprites _heroSprite;
 
-  Hero(Board board) {
-    _cellX = 1;
-    _cellY = 1 + board._margin;
+  Hero(Board board, Bomb bomb) {
+    _cellX = (int) board._level._spawnPointHero.x;
+    _cellY = (int) board._level._spawnPointHero.y + board._margin;
     _size = board._cellSize;
-    _position = new PVector(_size, 3 * _size);
+    _position = new PVector(_cellX * _size, _cellY * _size);
     _positionCenter = board.getCellCenter(_position.x, _position.y);
     _wasHit = false;
     _heroSprite = new Sprites("data/img/characters.png");
     _direction = new PVector(0, 0);
     _facing = TypeSpriteHero.STATIC_DOWN;
     _wasHit = false;
+    _lives = 3;
   }
 
   void move(Board board) {
@@ -32,7 +34,7 @@ class Hero {
     int targetCellY = _cellY + (int)(_direction.y / _size);
 
     //Definiton de la hitbox du hero
-    boolean targetCellEmpty = targetCellX >= 0 && targetCellX < board._nbCellsX &&
+    boolean targetCellEmpty = targetCellX >= 0 && targetCellX <= board._nbCellsX &&
       targetCellY >= 0 && targetCellY < board._nbCellsY &&
       board._cells[targetCellX][targetCellY-board._margin] == TypeCell.EMPTY;
     boolean hitboxRight = _direction.x > 0 && _position.x + _size < (_cellX + 1) * _size;
@@ -60,38 +62,34 @@ class Hero {
       _position.y += _direction.y/18;
       _position.x = _cellX * _size;
     }
+
+    //println(board._cells[targetCellX][targetCellY - board._margin]);
+    println("cell =",_cellX, _cellY);
+    println("target cell =",targetCellX,targetCellY,board._cells[targetCellX][targetCellY - board._margin]);
+    
   }
 
-  void update(Board board) {
+  void update(Board board, Bomb bomb) {
     heroCoordinates(board);
+    if (_wasHit) {
+      dies(board);
+    }
   }
-  
-  void heroCoordinates(Board board){
+
+  void heroCoordinates(Board board) {
     boolean newCellXRight = _positionCenter.x > (_cellX + 1) * _size;
     boolean newCellXLeft  = _positionCenter.x < _cellX * _size;
     boolean newCellYUp    = _positionCenter.y > (_cellY + 1) * _size;
     boolean newCellYDown  = _positionCenter.y < _cellY * _size;
-    
+
     _positionCenter       = board.getCellCenter(_position.x, _position.y);
 
     if (newCellXRight) {
       _cellX++;
     }
-
     if (newCellXLeft) {
       _cellX--;
     }
-
-    if (_positionCenter.x < board.getCellCenter((_cellX + -1) * _size, _cellY * _size).x) {
-      _cellX = _cellX -1;
-    }
-
-    if (_positionCenter.y > board.getCellCenter(_cellX  * _size, (_cellY + 1) * _size).y) {
-      _cellY ++;
-    }
-
-    if (_positionCenter.y < board.getCellCenter(_cellX  * _size, (_cellY - 1) * _size).y) {
-      _cellY = _cellY -1;
     if (newCellYUp) {
       _cellY++;
     }
@@ -101,16 +99,28 @@ class Hero {
     }
   }
 
-  void isNearExplosion() {
-    boolean isLeft = (_cellX == game._bomb._cellX - 1) && (_cellY == game._bomb._cellY);
-    boolean isRight = (_cellX == game._bomb._cellX + 1 && _cellY == game._bomb._cellY);
-    boolean isDown = (_cellY == game._bomb._cellY + 1 && _cellX == game._bomb._cellX);
-    boolean isUp = (_cellY == game._bomb._cellY - 1 && _cellX == game._bomb._cellX);
-    if ( isLeft  || isRight || isDown ||  isUp) {
+  void isNearExplosion(Bomb bomb) {
+    boolean isLeft = (_cellX == bomb._cellX - 1) && (_cellY == bomb._cellY);
+    boolean isRight = (_cellX == bomb._cellX + 1 && _cellY == bomb._cellY);
+    boolean isDown = (_cellY == bomb._cellY + 1 && _cellX == bomb._cellX);
+    boolean isUp = (_cellY == bomb._cellY - 1 && _cellX == bomb._cellX);
+    boolean isInside = (_cellX == bomb._cellX && _cellY == bomb._cellY);
+    if ( isLeft  || isRight || isDown ||  isUp || isInside) {
       _wasHit = true;
     }
   }
 
+  void dies(Board board) {
+    if (_lives < 1) {
+      exit();
+    } else {
+      _wasHit = false;
+      _lives --;
+      _cellX = (int) board._level._spawnPointHero.x;
+      _cellY = (int) board._level._spawnPointHero.y + board._margin;
+      _position = new PVector(_cellX * _size, _cellY * _size);
+    }
+  }
   void drawIt(Board board) {
 
     move(board);
@@ -145,13 +155,5 @@ class Hero {
     if (_wasHit) {
       _heroSprite.heroDying(posX, posY, _size);
     }
-  }
-
-  boolean allowPutBomb(PVector position, boolean right) {
-    position = new PVector(_positionCenter.x, _positionCenter.y);
-    if (right) {
-      return right;
-    }
-    return false;
   }
 }

@@ -24,36 +24,18 @@ class Bomb {
     _BombSprite.animatedBomb(position.x, position.y, game._board._cellSize);
   }
 
-
-  void update(Board board, Hero hero) {
-    _position = new PVector(_cellX * board._cellSize, ((_cellY + 2) * board._cellSize) + board._cellSize / 2);
-    if (hero._positionCenter.x > (hero._cellX + 1) * board._cellSize) {
-      _cellX = hero._cellX + 1;
-    }
-
-    if (hero._positionCenter.y > (hero._cellY + 1) * board._cellSize) {
-      _cellY = hero._cellY + 1;
-    }
-
-    if (hero._positionCenter.x < hero._cellX * board._cellSize) {
-      _cellX = hero._cellX - 1;
-    }
-
-    if (hero._positionCenter.y < hero._cellY * board._cellSize) {
-      _cellY = hero._cellY - 1;
-    }
-    println("cell x bombe = ", _cellX, " cell y bombe = ", _cellY);
   void startCountdown(Board board) {
     _explode = true;
     _startTime = millis();
   }
 
-  void detonate() {
+  void detonate(Board board,Hero hero) {
     if (_explode) {
       float elapsedTime = millis() - _startTime;
       if (elapsedTime >= _timeToExplode) {
-        // La bombe a explosé, ajoutez ici le code nécessaire
-        // par exemple, définir la tuile comme explosée dans le tableau de jeu.
+        hero.isNearExplosion(this);
+        explosion(board);
+        
         _explode = false;
       }
     }
@@ -67,6 +49,15 @@ class Bomb {
     
     if (rightCellIsDes){
       board._cells[_cellX + 1][_cellY - board._margin] = TypeCell.EMPTY;
+    }
+    if (leftCellIsDes){
+      board._cells[_cellX - 1][_cellY - board._margin] = TypeCell.EMPTY;
+    }
+    if (upCellIsDes){
+      board._cells[_cellX][_cellY - 1 - board._margin] = TypeCell.EMPTY;
+    }
+    if (downCellIsDes){
+      board._cells[_cellX][_cellY + 1 - board._margin] = TypeCell.EMPTY;
     }
   }
     
@@ -82,7 +73,7 @@ class Bomb {
   }
 
   void update(Board board, Hero hero) {
-    detonate();
+    detonate(board, hero);
     followHero(board, hero);
   }
   
