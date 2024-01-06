@@ -28,6 +28,7 @@ class Game
     _bomb.drawIt(position);
     }
     _bomb._start = false;
+    _bomb.drawIt();
     _hero.drawIt(_board);
   }
 
@@ -73,6 +74,9 @@ class Game
       _bomb._start = true;
       
     }
+    if (key == 'b'){
+      _bomb.startCountdown(_board);
+    } 
   }
 
   void keyReleased() {

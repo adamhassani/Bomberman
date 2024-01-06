@@ -5,7 +5,7 @@ final color grey = color(80);
 
 //parametres pour l'animation du mur destructible
 int currentImageIndexDesWall = 0;
-final int intervalDesWall = 150; // interval en millisecondes
+final int intervalDesWall = 100; // interval en millisecondes
 int lastImageSwitchTimeDesWall = 0;
 
 //Parametres pour l'animation de la porte de sortie

@@ -13,6 +13,7 @@ class Board
   float _cellSize;
   PImage[][] _cellImage; // Tableau de toutes les cells du board
   LevelLoader _level;
+  int _margin;
 
   Board(PVector drawPosition, PVector drawSize, int nbCellsX, int nbCellsY) {
     _drawPosition = drawPosition;
@@ -21,13 +22,18 @@ class Board
     _nbCellsY = nbCellsY;
     _cellSize = _drawSize.x / nbCellsY;
     _cells = new TypeCell[nbCellsY][nbCellsX];
-    _level = new LevelLoader("levels/level1.txt");
+    _level = new LevelLoader("levels/level2.txt");
     _cellImage = _level.loadLevel(this);
+    _margin = 2;
   }
 
   PVector getCellCenter(float i, float j) {
     PVector center = new PVector(i + _cellSize / 2, j + _cellSize / 2);
     return center;
+  }
+  
+  void update(Bomb bomb){
+    
   }
 
   void drawIt() {
@@ -37,7 +43,7 @@ class Board
     for ( int column = 0; column < _cellImage.length; column++) {
       for ( int line = 0; line < _cellImage[column].length; line++) {
         float posX = column * _cellSize;
-        float posY = (2 + line) * _cellSize + _cellSize/2;
+        float posY = (_margin + line) * _cellSize;
 
         //Animation Mur destructible avec ombre
         if (_level._sprites.areSpritesEqual(_cellImage[column][line], _level._sprites.defSpritesLevel().get(TypeSpriteLevel.DESTRUCTIBLE_WALL_UNDER_BUILD1))) {
