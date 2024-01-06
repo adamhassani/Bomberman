@@ -3,6 +3,7 @@ class Game
   Board _board;
   Hero _hero;
   Bomb _bomb;
+  Mob _mob;
 
   PVector _drawSize;
 
@@ -14,6 +15,7 @@ class Game
     _board = new Board(origin, drawSize, 13, 15);
     _hero = new Hero(_board, _bomb);
     _bomb = new Bomb(_hero, _board);
+    _mob = new Mob(_board);
   }
 
   void update() {
@@ -24,6 +26,7 @@ class Game
   void drawIt() {
     _board.drawIt();
     _bomb.drawIt();
+    _mob.drawIt();
     _hero.drawIt(_board);
   }
 

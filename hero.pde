@@ -21,7 +21,6 @@ class Hero {
     _size = board._cellSize;
     _position = new PVector(_cellX * _size, _cellY * _size);
     _positionCenter = board.getCellCenter(_position.x, _position.y);
-    _wasHit = false;
     _heroSprite = new Sprites("data/img/characters.png");
     _direction = new PVector(0, 0);
     _facing = TypeSpriteHero.STATIC_DOWN;

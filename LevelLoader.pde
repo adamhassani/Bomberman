@@ -3,12 +3,13 @@ class LevelLoader {
   String[] _lines;
   Sprites _sprites;
   PVector _spawnPointHero;
-  PVector _spawnPointMob;
+  ArrayList<PVector> _spawnPointMob;
 
   LevelLoader(String filePath) {
 
     _lines = loadStrings(filePath);
     _sprites = new Sprites("data/img/tiles.png");
+    _spawnPointMob = new ArrayList<PVector>();
   }
 
   PImage[][] loadLevel(Board board) {
@@ -51,8 +52,8 @@ class LevelLoader {
           if (isHero) {
             _spawnPointHero = new PVector(column, line);
           }
-          if (isMob) {
-            _spawnPointMob = new PVector(column, line);
+          else if (isMob) {
+            _spawnPointMob.add(new PVector(column, line));
           }
 
           if (isUnderWall) {
@@ -60,16 +61,16 @@ class LevelLoader {
             if (isHero) {
               _spawnPointHero = new PVector(column, line);
             }
-            if (isMob) {
-              _spawnPointMob = new PVector(column, line);
+            else if (isMob) {
+            _spawnPointMob.add(new PVector(column, line));
             }
           } else if (isUnderDestructibleWall) {
             level[column][line] = (definedSprites.get(TypeSpriteLevel.EMPTY_UNDER_DESTRUCTIBLE_WALL));
             if (isHero) {
               _spawnPointHero = new PVector(column, line);
             }
-            if (isMob) {
-              _spawnPointMob = new PVector(column, line);
+            else if (isMob) {
+            _spawnPointMob.add(new PVector(column, line));
             }
           }
         }

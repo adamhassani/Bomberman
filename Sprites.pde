@@ -16,6 +16,12 @@ enum TypeSpriteBomb
   SMALL_SIZE_BOMB, MEDIUM_SIZE_BOMB, BIG_SIZE_BOMB
 }
 
+enum TypeSpriteMob
+{
+  GOING_DOWN1, GOING_DOWN2, GOING_DOWN3, GOING_DOWN4, GOING_UP1, GOING_UP2, GOING_UP3, GOING_UP4,
+    GOING_LEFT1, GOING_LEFT2, GOING_LEFT3, GOING_LEFT4, GOING_RIGHT1, GOING_RIGHT2, GOING_RIGHT3, GOING_RIGHT4
+}
+
 class Sprites {
   PImage allSprites;
   int boardSpriteSize;
@@ -111,6 +117,28 @@ class Sprites {
 
     return sprites;
   }
+
+  HashMap<TypeSpriteMob, PImage> defSpriteMob() {
+    HashMap<TypeSpriteMob, PImage> sprites = new HashMap<>();
+
+    sprites.put(TypeSpriteMob.GOING_DOWN1, allSprites.get(0, 3 * bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteMob.GOING_DOWN2, allSprites.get(bombermanSpriteWidth, 3 * bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteMob.GOING_DOWN3, allSprites.get(2 * bombermanSpriteWidth, 3 * bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteMob.GOING_DOWN4, allSprites.get(3 * bombermanSpriteWidth, 3 * bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
+
+    sprites.put(TypeSpriteMob.GOING_UP1, allSprites.get(4 * bombermanSpriteWidth, 3 * bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteMob.GOING_UP2, allSprites.get(5 * bombermanSpriteWidth, 3 * bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteMob.GOING_UP3, allSprites.get(6 * bombermanSpriteWidth, 3 * bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteMob.GOING_UP4, allSprites.get(7 * bombermanSpriteWidth, 3 * bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
+
+    sprites.put(TypeSpriteMob.GOING_LEFT1, allSprites.get(0, 4 * bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteMob.GOING_LEFT2, allSprites.get(bombermanSpriteWidth, 4 * bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteMob.GOING_LEFT3, allSprites.get(2 * bombermanSpriteWidth, 4 * bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
+    sprites.put(TypeSpriteMob.GOING_LEFT4, allSprites.get(3 * bombermanSpriteWidth, 4 * bombermanSpriteHeight, bombermanSpriteWidth, bombermanSpriteHeight));
+
+    return sprites;
+  }
+
 
   PImage invertSprite(PImage sprite) {
 
@@ -268,18 +296,21 @@ class Sprites {
   void heroDying(float posX, float posY, float size) {
     HashMap<TypeSpriteHero, PImage> definedSprites = defSpriteBomberman();
     PImage[] animation = new PImage[6];
-    
+
     animation[0] = definedSprites.get(TypeSpriteHero.START_DEATH);
     animation[1] = definedSprites.get(TypeSpriteHero.DEATH1);
     animation[2] = definedSprites.get(TypeSpriteHero.DEATH2);
     animation[3] = definedSprites.get(TypeSpriteHero.DEATH3);
     animation[4] = definedSprites.get(TypeSpriteHero.DEATH4);
     animation[5] = definedSprites.get(TypeSpriteHero.FINAL_DEATH);
-    
+
     if (millis() - lastImageSwitchTimeHeroDeath > intervalHeroDeath) {
       currentImageIndexHeroDeath = (currentImageIndexHeroDeath + 1) % animation.length;
       lastImageSwitchTimeHeroDeath = millis();
     }
     image(animation[currentImageIndexHeroDeath], posX, posY, size, size * 3/2);
+  }
+  
+  void mobWalkingDown(float posX, float posY, float size){
   }
 }
