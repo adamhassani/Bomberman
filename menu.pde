@@ -20,6 +20,7 @@ class Menu {
   Button start;
   PVector posButton;
   boolean isPlaying;
+  boolean isPause;
 
   Menu() {
     posButton = new PVector(width/5, 0);
@@ -27,6 +28,7 @@ class Menu {
     resume = new Button("Resume", posButton);
     quit = new Button("Quit", posButton);
     isPlaying = false;
+    isPause = true;
   }
 
   void drawIt() {
@@ -69,20 +71,26 @@ class Menu {
       isPlaying = false;
       drawIt();
     }
+    isPause = true;
   }
 
   void update(Game game) {
   }
 
   void handleMouse() {
-    if ((mouseX > width / 5) && (mouseX < width - width / 5) && (mouseY > height / 5) && (mouseY < 240) && (mouseButton == LEFT)) {
-      isPlaying = true;
-    }
-    if ((mouseX > width / 5) && (mouseX < width - width / 5) && (mouseY > 350) && (mouseY < 450) && (mouseButton == LEFT)) {
-      isPlaying = true;
-    }
-    if ((mouseX > width / 5) && (mouseX < width - width / 5) && (mouseY > 535) && (mouseY < height - height / 5) && (mouseButton == LEFT)) {
-      exit();
+    if (isPause) {
+      if ((mouseX > width / 5) && (mouseX < width - width / 5) && (mouseY > height / 5) && (mouseY < 240) && (mouseButton == LEFT)) {
+        isPlaying = true;
+        isPause = false;
+      }
+      if ((mouseX > width / 5) && (mouseX < width - width / 5) && (mouseY > 350) && (mouseY < 450) && (mouseButton == LEFT)) {
+        isPlaying = true;
+        isPause = false;
+      }
+      if ((mouseX > width / 5) && (mouseX < width - width / 5) && (mouseY > 535) && (mouseY < height - height / 5) && (mouseButton == LEFT)) {
+        isPause = false;
+        exit();
+      }
     }
   }
 }
