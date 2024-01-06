@@ -13,7 +13,7 @@ class Game
     PVector drawSize = new PVector(width, height);
     _board = new Board(origin, drawSize, 13, 15);
     _hero = new Hero(_board);
-    _bomb = new Bomb(game._hero, game._board);
+    _bomb = new Bomb(_hero, _board);
   }
 
   void update() {
@@ -23,6 +23,11 @@ class Game
 
   void drawIt() {
     _board.drawIt();
+    PVector position = new PVector(_hero._cellX, _hero._cellY);
+    if(_hero.allowPutBomb(position, _bomb._start)){
+    _bomb.drawIt(position);
+    }
+    _bomb._start = false;
     _hero.drawIt(_board);
   }
 
@@ -64,9 +69,10 @@ class Game
         keyRight = false;
       }
     }
-    if (key == 'b'){
-      _bomb.drawIt();
-    } 
+    if (key == 'b') {
+      _bomb._start = true;
+      
+    }
   }
 
   void keyReleased() {

@@ -24,6 +24,7 @@ class Hero {
     _heroSprite = new Sprites("data/img/characters.png");
     _direction = new PVector(0, 0);
     _facing = TypeSpriteHero.STATIC_DOWN;
+    _wasHit = false;
   }
 
   void move(Board board) {
@@ -49,17 +50,27 @@ class Hero {
     if (_positionCenter.x > board.getCellCenter((_cellX + 1) * _size, _cellY * _size).x) {
       _cellX ++;
     }
-    
+
     if (_positionCenter.x < board.getCellCenter((_cellX + -1) * _size, _cellY * _size).x) {
       _cellX = _cellX -1;
     }
-    
+
     if (_positionCenter.y > board.getCellCenter(_cellX  * _size, (_cellY + 1) * _size).y) {
       _cellY ++;
     }
-    
+
     if (_positionCenter.y < board.getCellCenter(_cellX  * _size, (_cellY - 1) * _size).y) {
       _cellY = _cellY -1;
+    }
+  }
+
+  void isNearExplosion() {
+    boolean isLeft = (_cellX == game._bomb._cellX - 1) && (_cellY == game._bomb._cellY);
+    boolean isRight = (_cellX == game._bomb._cellX + 1 && _cellY == game._bomb._cellY);
+    boolean isDown = (_cellY == game._bomb._cellY + 1 && _cellX == game._bomb._cellX);
+    boolean isUp = (_cellY == game._bomb._cellY - 1 && _cellX == game._bomb._cellX);
+    if ( isLeft  || isRight || isDown ||  isUp) {
+      _wasHit = true;
     }
   }
 
@@ -94,5 +105,16 @@ class Hero {
       // Utilisez la sprite statique associée à la dernière direction
       image(currentSprite, posX, posY, _size, _size * 3/2);
     }
+    if (_wasHit) {
+      _heroSprite.heroDying(posX, posY, _size);
+    }
+  }
+
+  boolean allowPutBomb(PVector position, boolean right) {
+    position = new PVector(_positionCenter.x, _positionCenter.y);
+    if (right) {
+      return right;
+    }
+    return false;
   }
 }

@@ -30,3 +30,8 @@ final float speed = 2.0;
 int currentImageIndexBomb = 0;
 int lastImageSwitchTimeBomb = 0;
 final int intervalBomb = 150;
+
+//Paramètre de la mort du hero
+int currentImageIndexHeroDeath = 0;
+int lastImageSwitchTimeHeroDeath = 0;
+final int intervalHeroDeath = 500;

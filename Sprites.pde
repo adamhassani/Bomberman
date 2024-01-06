@@ -264,4 +264,22 @@ class Sprites {
     }
     image(animation[currentImageIndexHero], posX, posY, size, size * 3/2);
   }
+
+  void heroDying(float posX, float posY, float size) {
+    HashMap<TypeSpriteHero, PImage> definedSprites = defSpriteBomberman();
+    PImage[] animation = new PImage[6];
+    
+    animation[0] = definedSprites.get(TypeSpriteHero.START_DEATH);
+    animation[1] = definedSprites.get(TypeSpriteHero.DEATH1);
+    animation[2] = definedSprites.get(TypeSpriteHero.DEATH2);
+    animation[3] = definedSprites.get(TypeSpriteHero.DEATH3);
+    animation[4] = definedSprites.get(TypeSpriteHero.DEATH4);
+    animation[5] = definedSprites.get(TypeSpriteHero.FINAL_DEATH);
+    
+    if (millis() - lastImageSwitchTimeHeroDeath > intervalHeroDeath) {
+      currentImageIndexHeroDeath = (currentImageIndexHeroDeath + 1) % animation.length;
+      lastImageSwitchTimeHeroDeath = millis();
+    }
+    image(animation[currentImageIndexHeroDeath], posX, posY, size, size * 3/2);
+  }
 }
