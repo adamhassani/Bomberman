@@ -11,6 +11,18 @@ enum TypeSpriteLevel
     DESTRUCTIBLE_WALL_UNDER_BUILD1, DESTRUCTIBLE_WALL_UNDER_BUILD2, DESTRUCTIBLE_WALL_UNDER_BUILD3, DESTRUCTIBLE_WALL_UNDER_BUILD4, EXIT_DOOR1, EXIT_DOOR2
 }
 
+enum TypeSpriteWallExplosion
+{
+  EXPLOSION1, EXPLOSION2, EXPLOSION3, EXPLOSION4, EXPLOSION5, EXPLOSION6
+}
+
+enum TypeSpriteFire
+{
+  MIDDLE_EXPLOSION1, MIDDLE_EXPLOSION2, MIDDLE_EXPLOSION3, MIDDLE_EXPLOSION4, MIDDLE_EXPLOSION5, LEFT_EXPLOSION1, LEFT_EXPLOSION2, LEFT_EXPLOSION3, LEFT_EXPLOSION4,
+    LEFT_EXPLOSION5, RIGHT_EXPLOSION1, RIGHT_EXPLOSION2, RIGHT_EXPLOSION3, RIGHT_EXPLOSION4, RIGHT_EXPLOSION5, UP_EXPLOSION1, UP_EXPLOSION2, UP_EXPLOSION3, UP_EXPLOSION4,
+    UP_EXPLOSION5, DOWN_EXPLOSION1, DOWN_EXPLOSION2, DOWN_EXPLOSION3, DOWN_EXPLOSION4, DOWN_EXPLOSION5
+}
+
 enum TypeSpriteBomb
 {
   SMALL_SIZE_BOMB, MEDIUM_SIZE_BOMB, BIG_SIZE_BOMB
@@ -118,6 +130,10 @@ class Sprites {
     return sprites;
   }
 
+
+
+
+
   HashMap<TypeSpriteMob, PImage> defSpriteMob() {
     HashMap<TypeSpriteMob, PImage> sprites = new HashMap<>();
 
@@ -139,7 +155,63 @@ class Sprites {
     return sprites;
   }
 
+  HashMap<TypeSpriteWallExplosion, PImage> defSpriteWallExplosion() {
+    HashMap<TypeSpriteWallExplosion, PImage> sprites = new HashMap<>();
+    
+    sprites.put(TypeSpriteWallExplosion.EXPLOSION1, allSprites.get(8 * boardSpriteSize, 4 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteWallExplosion.EXPLOSION2, allSprites.get(9 * boardSpriteSize, 4 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteWallExplosion.EXPLOSION3, allSprites.get(8 * boardSpriteSize, 5 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteWallExplosion.EXPLOSION4, allSprites.get(9 * boardSpriteSize, 5 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteWallExplosion.EXPLOSION5, allSprites.get(8 * boardSpriteSize, 6 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteWallExplosion.EXPLOSION6, allSprites.get(9 * boardSpriteSize, 6 * boardSpriteSize, boardSpriteSize, boardSpriteSize));
 
+    return sprites;
+  }
+  
+  HashMap<TypeSpriteFire, PImage> defSpriteFireExplosion() {
+    HashMap<TypeSpriteFire, PImage> sprites = new HashMap<>();
+    
+    //sprite du centre de l'explosion
+    sprites.put(TypeSpriteFire.MIDDLE_EXPLOSION1, allSprites.get(0 * boardSpriteSize, 2  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteFire.MIDDLE_EXPLOSION2, allSprites.get(1 * boardSpriteSize, 2  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteFire.MIDDLE_EXPLOSION3, allSprites.get(2 * boardSpriteSize, 2  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteFire.MIDDLE_EXPLOSION4, allSprites.get(3 * boardSpriteSize, 2  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteFire.MIDDLE_EXPLOSION5, allSprites.get(4 * boardSpriteSize, 2  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    
+    //sprite de l'explosion côté gauche
+    sprites.put(TypeSpriteFire.LEFT_EXPLOSION1, allSprites.get(0 * boardSpriteSize, 0  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteFire.LEFT_EXPLOSION2, allSprites.get(1 * boardSpriteSize, 0  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteFire.LEFT_EXPLOSION3, allSprites.get(2 * boardSpriteSize, 0  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteFire.LEFT_EXPLOSION4, allSprites.get(3 * boardSpriteSize, 0  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteFire.LEFT_EXPLOSION5, allSprites.get(4 * boardSpriteSize, 0  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    
+    //sprite de l'explosion côté droit
+    sprites.put(TypeSpriteFire.RIGHT_EXPLOSION1, allSprites.get(5 * boardSpriteSize, 1  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteFire.RIGHT_EXPLOSION2, allSprites.get(6 * boardSpriteSize, 1  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteFire.RIGHT_EXPLOSION3, allSprites.get(7 * boardSpriteSize, 1  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteFire.RIGHT_EXPLOSION4, allSprites.get(8 * boardSpriteSize, 1  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteFire.RIGHT_EXPLOSION5, allSprites.get(9 * boardSpriteSize, 1  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    
+    //sprite de l'explosion haut
+    sprites.put(TypeSpriteFire.UP_EXPLOSION1, allSprites.get(5 * boardSpriteSize, 0  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteFire.UP_EXPLOSION2, allSprites.get(6 * boardSpriteSize, 0  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteFire.UP_EXPLOSION3, allSprites.get(7 * boardSpriteSize, 0  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteFire.UP_EXPLOSION4, allSprites.get(8 * boardSpriteSize, 0  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteFire.UP_EXPLOSION5, allSprites.get(9 * boardSpriteSize, 0  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    
+    //sprite de l'explosion bas
+    sprites.put(TypeSpriteFire.DOWN_EXPLOSION1, allSprites.get(0 * boardSpriteSize, 1  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteFire.DOWN_EXPLOSION2, allSprites.get(1 * boardSpriteSize, 1  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteFire.DOWN_EXPLOSION3, allSprites.get(2 * boardSpriteSize, 1  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteFire.DOWN_EXPLOSION4, allSprites.get(3 * boardSpriteSize, 1  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    sprites.put(TypeSpriteFire.DOWN_EXPLOSION5, allSprites.get(4 * boardSpriteSize, 1  * boardSpriteSize, boardSpriteSize, boardSpriteSize));
+    
+    return sprites;
+  }
+  
+
+
+  //inverse les sprites
   PImage invertSprite(PImage sprite) {
 
     PImage invertedSprite = createImage(sprite.width, sprite.height, ARGB);
@@ -152,7 +224,8 @@ class Sprites {
     }
     return invertedSprite;
   }
-
+  
+  //anime les destructible wall
   void animatedWall(float posX, float posY, Board board, TypeSpriteLevel type) {
     HashMap<TypeSpriteLevel, PImage> definedSprites = defSpritesLevel();
     PImage[] animation = new PImage[4];
@@ -176,7 +249,7 @@ class Sprites {
     image(animation[currentImageIndexDesWall], posX, posY, board._cellSize, board._cellSize);
   }
 
-
+  //anime la sortie
   void animatedDoor(float posX, float posY, Board board) {
     HashMap<TypeSpriteLevel, PImage> definedSprites = defSpritesLevel();
     PImage[] animation = new PImage[2];
@@ -191,7 +264,8 @@ class Sprites {
     }
     image(animation[currentImageIndexExit], posX, posY, board._cellSize, board._cellSize);
   }
-
+  
+  //compare deux sprites
   boolean areSpritesEqual(PImage sprite1, PImage sprite2) {
     if (sprite1.width != sprite2.width || sprite1.height != sprite2.height) {
       return false;
@@ -208,7 +282,30 @@ class Sprites {
     }
     return true;
   }
-
+  
+  //animation de la destruction d'un mur
+  void animeWallDestruction(float posX, float posY, float size){
+    HashMap<TypeSpriteWallExplosion, PImage> definedSprites = defSpriteWallExplosion();
+    PImage[] animation = new PImage[6];
+    
+    animation[0] = definedSprites.get(TypeSpriteWallExplosion.EXPLOSION1);
+    animation[1] = definedSprites.get(TypeSpriteWallExplosion.EXPLOSION2);
+    animation[2] = definedSprites.get(TypeSpriteWallExplosion.EXPLOSION3);
+    animation[3] = definedSprites.get(TypeSpriteWallExplosion.EXPLOSION4);
+    animation[4] = definedSprites.get(TypeSpriteWallExplosion.EXPLOSION5);
+    animation[5] = definedSprites.get(TypeSpriteWallExplosion.EXPLOSION6);
+    
+    if (millis() - lastImageSwitchTimeBomb > intervalBomb) {
+      currentImageIndexBomb = (currentImageIndexBomb + 1) % animation.length;
+      lastImageSwitchTimeBomb = millis();
+    }
+    image(animation[currentImageIndexBomb], posX, posY, size, size);
+    
+  }
+  
+  
+  
+  //anime les bombes
   void animatedBomb(float posX, float posY, float size) {
     HashMap<TypeSpriteBomb, PImage> definedSprites = defSpriteBomb();
     PImage[] animation = new PImage[4];
@@ -224,7 +321,7 @@ class Sprites {
     }
     image(animation[currentImageIndexBomb], posX, posY, size, size);
   }
-
+  //animation du héro qui marche vers la gauche
   void heroWalkingLeft(float posX, float posY, float size) {
     HashMap<TypeSpriteHero, PImage> definedSprites = defSpriteBomberman();
     PImage[] animation = new PImage[4];
@@ -241,7 +338,7 @@ class Sprites {
     image(animation[currentImageIndexHero], posX, posY, size, size * 3/2);
   }
 
-
+  //animation du héro qui marche vers la droite
   void heroWalkingRight(float posX, float posY, float size) {
     HashMap<TypeSpriteHero, PImage> definedSprites = defSpriteBomberman();
     PImage[] animation = new PImage[4];
@@ -259,7 +356,7 @@ class Sprites {
     image(animation[currentImageIndexHero], posX, posY, size, size * 3/2);
   }
 
-
+  //animation du héro qui marche vers le haut
   void heroWalkingUp(float posX, float posY, float size) {
     HashMap<TypeSpriteHero, PImage> definedSprites = defSpriteBomberman();
     PImage[] animation = new PImage[4];
@@ -276,7 +373,7 @@ class Sprites {
     image(animation[currentImageIndexHero], posX, posY, size, size * 3/2);
   }
 
-
+  //animation du héro qui marche vers le bas
   void heroWalkingDown(float posX, float posY, float size) {
     HashMap<TypeSpriteHero, PImage> definedSprites = defSpriteBomberman();
     PImage[] animation = new PImage[4];
@@ -292,7 +389,7 @@ class Sprites {
     }
     image(animation[currentImageIndexHero], posX, posY, size, size * 3/2);
   }
-
+  //animation du héro qui meurt
   void heroDying(float posX, float posY, float size) {
     HashMap<TypeSpriteHero, PImage> definedSprites = defSpriteBomberman();
     PImage[] animation = new PImage[6];
@@ -310,7 +407,8 @@ class Sprites {
     }
     image(animation[currentImageIndexHeroDeath], posX, posY, size, size * 3/2);
   }
-  
-  void mobWalkingDown(float posX, float posY, float size){
+
+
+  void mobWalkingDown(float posX, float posY, float size) {
   }
 }

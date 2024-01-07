@@ -60,12 +60,7 @@ class Hero {
     if (hitboxUp) {
       _position.y += _direction.y/18;
       _position.x = _cellX * _size;
-    }
-
-    //println(board._cells[targetCellX][targetCellY - board._margin]);
-    println("cell =",_cellX, _cellY);
-    println("target cell =",targetCellX,targetCellY,board._cells[targetCellX][targetCellY - board._margin]);
-    
+    }  
   }
 
   void update(Board board, Bomb bomb) {
@@ -125,8 +120,6 @@ class Hero {
     move(board);
     float posX = _position.x;
     float posY = _position.y - _size/2;
-
-    //println(_position.x, _position.y);
 
     if (keyLeft) {
       _heroSprite.heroWalkingLeft(posX, posY, _size);

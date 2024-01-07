@@ -3,10 +3,10 @@ class Game
   Board _board;
   Hero _hero;
   Bomb _bomb;
-  Mob _mob;
+  Mob[] _mob;
 
   PVector _drawSize;
-
+  int _nbMob;
   String _levelName;
 
   Game() {
@@ -15,18 +15,29 @@ class Game
     _board = new Board(origin, drawSize, 13, 15);
     _hero = new Hero(_board, _bomb);
     _bomb = new Bomb(_hero, _board);
-    _mob = new Mob(_board);
+    _nbMob = _board._level._spawnPointMob.size();
+    _mob = new Mob[_nbMob];
+    for (int i = 0; i < _nbMob; i++) {
+      PVector mobSpawnPoint = _board._level._spawnPointMob.get(i);
+      _mob[i] = new Mob((int) mobSpawnPoint.x, (int) mobSpawnPoint.y, _board);
+    }
   }
+
 
   void update() {
     _hero.update(_board, _bomb);
     _bomb.update(_board, _hero);
+    for (int i = 0; i < _nbMob; i++) {
+      _mob[i].update(_board);
+    }
   }
 
   void drawIt() {
     _board.drawIt();
     _bomb.drawIt();
-    _mob.drawIt();
+    for (int i = 0; i < _nbMob; i++) {
+      _mob[i].drawIt(_board);
+    }
     _hero.drawIt(_board);
   }
 

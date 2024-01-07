@@ -1,48 +1,93 @@
 class Mob {
-  PVector[] _position, _positionCenter, _positionDraw;
-  PVector[] _cell;
+  // position on screen and position of the center of the hero
+  PVector _position, _positionCenter;
+  // position on board
+  int _cellX, _cellY;
+  // hero size
   float _size;
-  boolean[] _wasHit;
-  PVector[] _direction;
-  TypeSpriteMob[] _facing;
+  // direction du hero
+  PVector _direction;
+  //Orientation du Hero
+  TypeSpriteMob _facing;
+  boolean startedMoving;
+
   Sprites _mobSprite;
-  int _numMob;
 
-  Mob(Board board) {
-    _numMob = board._level._spawnPointMob.size();
-    _cell = new PVector[_numMob];
-    _position = new PVector[_numMob];
-    _positionCenter = new PVector[_numMob];
-    _wasHit = new boolean[_numMob];
-    _facing = new TypeSpriteMob[_numMob];
-    _direction = new PVector[_numMob];
-    _positionDraw = new PVector[_numMob];
+  Mob(int cellX, int cellY, Board board) {
+    _cellX = cellX;
+    _cellY = cellY + board._margin;
     _size = board._cellSize;
+    _position = new PVector(_cellX * _size, _cellY * _size);
+    _positionCenter = board.getCellCenter(_position.x, _position.y);
     _mobSprite = new Sprites("data/img/characters.png");
-    
-    
-    for (int i = 0; i < _numMob; i++) {
-      _cell[i] = new PVector();
-      _cell[i].x = board._level._spawnPointMob.get(i).x;
-      _cell[i].y = board._level._spawnPointMob.get(i).y +board._margin;
-      _position[i] = new PVector(_cell[i].x * _size, _cell[i].y * _size);
-      _positionCenter[i] = board.getCellCenter(_position[i].x, _position[i].y);
-      _wasHit[i] = false;
-      _facing[i] = TypeSpriteMob.GOING_DOWN1;
-      _direction[i] = new PVector(0, 0);
-    }
-
-    
-    
+    _direction = new PVector(0, 0);
+    _facing = TypeSpriteMob.GOING_DOWN1;
+    startedMoving = false;
   }
 
-  void drawIt() {
-    for (int i = 0; i < _numMob; i++) {
-      _positionDraw[i] = new PVector(_position[i].x, _position[i].y - _size/2);
-      PImage currentSprite = _mobSprite.defSpriteMob().get(_facing[i]);
-      image(currentSprite, _positionDraw[i].x, _positionDraw[i].y, _size, _size * 3/2);
-      println(" mob",i," cellX =",_cell[i].x," cellY =",_cell[i].y,"position =",_positionDraw[i].x, _positionDraw[i].y);
-      println("numMob = ",_numMob);
+  void move(Board board) {
+
+    boolean cellUpEmpty = board._cells[_cellX][_cellY - 1 - board._margin] == TypeCell.EMPTY;
+    boolean cellDownEmpty = board._cells[_cellX][_cellY + 1 - board._margin] == TypeCell.EMPTY;
+    boolean cellRightEmpty = board._cells[_cellX + 1][_cellY - board._margin] == TypeCell.EMPTY;
+    boolean cellLeftEmpty = board._cells[_cellX - 1][_cellY - board._margin] == TypeCell.EMPTY;
+
+    boolean hitboxRight = _position.x + _size < (_cellX + 1) * _size;
+    boolean hitboxLeft = _position.x > _cellX * _size;
+    boolean hitboxDown =  _position.y + _size < (_cellY + 1) * _size;
+    boolean hitboxUp = _position.y > _cellY * _size;
+
+    if (!startedMoving) {
+      if (cellUpEmpty) {
+        _direction.set(0, -_size);
+        startedMoving = true;
+      }
     }
+
+    if (_direction.y < 0) {
+      if (hitboxUp && !cellUpEmpty);
+        _direction.set(0,0);
+    }
+
+    _position.x += _direction.x/200;
+    _position.y += _direction.y/200;
+
+  }
+
+  void mobCoordinates(Board board) {
+    boolean newCellXRight = _positionCenter.x > (_cellX + 1) * _size;
+    boolean newCellXLeft  = _positionCenter.x < _cellX * _size;
+    boolean newCellYUp    = _positionCenter.y > (_cellY + 1) * _size;
+    boolean newCellYDown  = _positionCenter.y < _cellY * _size;
+
+    _positionCenter       = board.getCellCenter(_position.x, _position.y);
+
+    if (newCellXRight) {
+      _cellX++;
+    }
+    if (newCellXLeft) {
+      _cellX--;
+    }
+    if (newCellYUp) {
+      _cellY++;
+    }
+
+    if (newCellYDown) {
+      _cellY--;
+    }
+  }
+  
+  void update(Board board) {
+    mobCoordinates(board);
+    move(board);
+  }
+
+
+  void drawIt(Board board) {
+    
+    float posX = _position.x;
+    float posY = _position.y - _size/2;
+    PImage currentSprite = _mobSprite.defSpriteMob().get(_facing);
+    image(currentSprite, posX, posY, _size, _size * 3/2);
   }
 }
